@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+  <!ENTITY fill_color "none">
+  <!ENTITY stroke_color "#FFFFFF">
+]>
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45">
+  <rect x="0" y="0" width="44" height="44" style="fill:&fill_color;;stroke:&fill_color;;stroke-width:0"/>
+
+  <line x1="0" x2="44" y1="2" y2="2" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line x1="0" x2="44" y1="12" y2="12" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line x1="0" x2="44" y1="22" y2="22" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line x1="0" x2="44" y1="32" y2="32" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line x1="0" x2="44" y1="42" y2="42" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+
+  <line y1="0" y2="44" x1="2" x2="2" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line y1="0" y2="44" x1="12" x2="12" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line y1="0" y2="44" x1="22" x2="22" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line y1="0" y2="44" x1="32" x2="32" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line y1="0" y2="44" x1="42" x2="42" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+
+</svg>

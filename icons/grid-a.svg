@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+  <!ENTITY fill_color "none">
+  <!ENTITY stroke_color "#FFFFFF">
+]>
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45">
+  <rect x="0" y="0" width="45" height="45" style="fill:&fill_color;;stroke:&fill_color;;stroke-width:0"/>
+
+  <line x1="0" x2="45" y1="6" y2="6" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line x1="0" x2="45" y1="39" y2="39" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+
+  <line y1="0" y2="45" x1="6" x2="6" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+  <line y1="0" y2="45" x1="39" x2="39" style="fill:&fill_color;;stroke:&stroke_color;;stroke-width:4"/>
+
+</svg>
