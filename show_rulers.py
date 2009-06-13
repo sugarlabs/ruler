@@ -1,4 +1,5 @@
 # Copyright 2007 Mitchell N. Charity
+# Copyright 2009 Walter Bender
 #
 # This file is part of Ruler.
 #
@@ -19,6 +20,7 @@ from __future__ import division
 import paper
 import cairo
 from util import mm
+import os.path
 
 def subactivity_init(api):
     api.declare_subactivity('ruler', ScreenOfRulers())
@@ -31,13 +33,23 @@ class ScreenOfRulers(paper.Drawing):
 
         self.draw_ruler_pair(c,mm(20))
 
-        offset_of_xo_side_from_screen = mm(-38.5) #XXX needs checking
-        c.move_to(offset_of_xo_side_from_screen, mm(65))
-        self.draw_cm_ruler(c,180)
+        # only calculate offsets if on an OLPC XO-1
+        if os.path.exists('/sys/power/olpc-pm'):
+            offset_of_xo_side_from_screen = mm(-38.5) #XXX needs checking
+            c.move_to(offset_of_xo_side_from_screen, mm(65))
+            self.draw_cm_ruler(c,180)
             
-        offset_of_molding_from_screen = mm(-0.4) #XXX +- 0.2 ??
-        c.move_to(offset_of_molding_from_screen, mm(100))
-        self.draw_cm_ruler(c,150)
+            offset_of_molding_from_screen = mm(-0.4) #XXX +- 0.2 ??
+            c.move_to(offset_of_molding_from_screen, mm(100))
+            self.draw_cm_ruler(c,150)
+        else:
+            offset_of_xo_side_from_screen = mm(0)
+            c.move_to(offset_of_xo_side_from_screen, mm(65))
+            self.draw_cm_ruler(c,180)
+            
+            offset_of_molding_from_screen = mm(0)
+            c.move_to(offset_of_molding_from_screen, mm(100))
+            self.draw_cm_ruler(c,150)
 
     def draw_ruler_pair(self,c,y):
 

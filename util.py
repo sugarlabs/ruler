@@ -1,4 +1,5 @@
 # Copyright 2007 Mitchell N. Charity
+# Copyright 2009 Walter Bender
 #
 # This file is part of Ruler.
 #
@@ -17,7 +18,9 @@
 
 import gtk
 import os
-#import sugar
+import subprocess
+import re
+import subactivity
 
 def full_path(*args):
     return os.path.join(sugar.activity.activity.get_bundle_path(),*args)
@@ -28,7 +31,6 @@ def image_from_file(filename):
     img.set_from_file(fn)
     return img
 
-
 def toolbutton_from_image(img):
     button = sugar.graphics.toolbutton.ToolButton('go-next') #X
     button.set_icon_widget(img)
@@ -37,4 +39,29 @@ def toolbutton_from_image(img):
     return button
 
 def mm(n):
-    return n / 25.40 * 200
+    return n / 25.40 * subactivity.dpi
+
+def calc_dpi():
+# will use xrdb query to get dpi
+# $ xdpyinfo
+# looking for something similar to "  resolution:    96x96 dots per inch"
+
+    cmd = "/usr/bin/xdpyinfo"
+    try:
+        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        xrdb_output = re.split("\n",proc.communicate()[0])
+        for i in xrdb_output:
+            if i != "":
+                a = re.split(":",i)
+                if a[0] == '  resolution':
+                    for b in re.split("\s",a[1]):
+                        if b != "":
+                            c = re.split("x",b)
+                            if len(c) > 1:
+                                print "looking up dpi: " + c[0]
+                                return(int(c[0]))
+    except:
+        # just in case the above fails
+        print "defaulting to 96 dpi"
+        return(96)
+

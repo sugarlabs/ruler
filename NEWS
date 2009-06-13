@@ -1,0 +1,5 @@
+4
+
+* look up dpi from xdpyinfo
+* eliminate offset on non-OLPC-XO computers
+

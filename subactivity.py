@@ -1,4 +1,5 @@
 # Copyright 2007 Mitchell N. Charity
+# Copyright 2009 Walter Bender
 #
 # This file is part of Ruler.
 #
@@ -17,9 +18,11 @@
 
 import gtk
 import sugar
-import util
+from util import calc_dpi
 from sugar.activity import activity
 from gettext import gettext as _
+
+dpi = 96 # reasonable default
 
 class Activity(activity.Activity):
 
@@ -40,9 +43,9 @@ class Activity(activity.Activity):
         self.set_canvas(self._page_box)
         self.page = None
 
+        dpi = calc_dpi()
         self._init_api = SubActivityInitApi(self)
         self.configure_subactivities()
-
 
     def set_page(self,widget):
 
@@ -53,7 +56,6 @@ class Activity(activity.Activity):
         widget.show()
         
         self.page = widget
-
 
     def add_subactivity(self,module_name):
 

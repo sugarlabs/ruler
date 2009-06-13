@@ -3,6 +3,6 @@ name = Ruler
 service_name = com.laptop.Ruler
 class = RulerActivity.RulerActivity
 icon = activity-ruler
-activity_version = 3
+activity_version = 4
 show_launcher = yes
 license = GPLv3+
