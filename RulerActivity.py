@@ -54,10 +54,6 @@ import show_grids
 import show_checkers
 import show_angles
 
-SERVICE = 'org.sugarlabs.RulerActivity'
-IFACE = SERVICE
-PATH = '/org/augarlabs/RulerActivity'
-
 # Create a GTK+ widget on which we will draw using Cairo
 class MyCanvas(gtk.DrawingArea):
 
