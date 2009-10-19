@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-29 16:45-0500\n"
+"POT-Creation-Date: 2009-10-19 20:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,5 +17,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: activity/activity.info:2
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:157
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:292
 msgid "Ruler"
+msgstr ""
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:165
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:300
+msgid "Grid"
+msgstr ""
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:173
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:308
+msgid "Angles"
+msgstr ""
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:181
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:316
+msgid "Checker"
+msgstr ""
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:224
+msgid "Rulers"
 msgstr ""
