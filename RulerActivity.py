@@ -45,6 +45,9 @@ try:
 except:
     GRID_CELL_SIZE = 0
 
+import logging
+_logger = logging.getLogger("ruler-activity")
+
 from gettext import gettext as _
 
 import util
@@ -65,10 +68,7 @@ class MyCanvas(gtk.DrawingArea):
         self._draw_ruler = False
         self._object = None
         self.connect('expose-event', self.__expose_event_cb)
-        if os.path.exists('/sys/power/olpc-pm'):
-            self._dpi = 200 # OLPC
-        else:
-            self._dpi = 100 # best guess
+        self.dpi = 200
 
     def __expose_event_cb(self, drawing_area, event):
         cr = self.window.cairo_create()
@@ -114,6 +114,17 @@ class RulerActivity(activity.Activity):
 
         _width = gtk.gdk.screen_width()
         _height = gtk.gdk.screen_height()-GRID_CELL_SIZE
+
+        # Read the dpi from the Journal
+        try:
+            dpi = self.metadata['dpi']
+            _logger.debug("Read dpi: " + str(dpi))
+            self._canvas.set_dpi(int(dpi))
+        except:
+            if os.path.exists('/sys/power/olpc-pm'):
+                self._canvas.set_dpi(200) # OLPC XO
+            else:
+                self._canvas.set_dpi(100) # Just a guess
 
         # Create instances of our graphics
         self._r = show_rulers.ScreenOfRulers(_font,_font_bold,_width,_height)
@@ -260,6 +271,14 @@ class RulerActivity(activity.Activity):
         self._canvas.add_a_ruler(self._current)
         return
 
+    """
+    Write the dpi to the Journal
+    """
+    def write_file(self, file_path):
+        dpi =  self._canvas.get_dpi()
+        _logger.debug("Write dpi: " + str(dpi))
+        self.metadata['dpi'] = str(dpi)
+
 #
 # Project toolbar for pre-0.86 toolbars
 #
@@ -318,3 +337,4 @@ class ProjectToolbar(gtk.Toolbar):
         self.activity.tool_item_dpi.add(self.activity._dpi_spin)
         self.insert(self.activity.tool_item_dpi, -1)
         self.activity.tool_item_dpi.show()
+
