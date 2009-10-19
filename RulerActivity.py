@@ -21,8 +21,6 @@ pygtk.require('2.0')
 import gtk
 import gobject
 import cairo
-import pango
-import pangocairo
 import os.path
 
 import sugar
@@ -219,15 +217,17 @@ class RulerActivity(activity.Activity):
 
         except NameError:
             # Use pre-0.86 toolbar design
-            self.toolbox = activity.ActivityToolbox(self)
-            self.set_toolbox(self.toolbox)
+            toolbox = activity.ActivityToolbox(self)
+            self.set_toolbox(toolbox)
 
             self.projectToolbar = ProjectToolbar(self)
-            self.toolbox.add_toolbar( _('Rulers'), self.projectToolbar )
+            toolbox.add_toolbar( _('Rulers'), self.projectToolbar )
 
-            self.toolbox.show()
+            toolbox.show()
+            toolbox.set_current_toolbar(1)
 
- 
+        self.show_all() 
+
     #
     # Button callbacks
     #
@@ -267,7 +267,6 @@ class RulerActivity(activity.Activity):
 
     def _dpi_spin_cb(self, button):
         self._canvas.set_dpi(self._dpi_spin.get_value_as_int())
-        print "new dpi: " + str(self._canvas.get_dpi())
         self._canvas.add_a_ruler(self._current)
         return
 
@@ -314,7 +313,7 @@ class ProjectToolbar(gtk.Toolbar):
 
         # Checker
         self.activity.checker = ToolButton( "checker" )
-        self.activity.checker.set_tooltip(_('checker'))
+        self.activity.checker.set_tooltip(_('Checker'))
         self.activity.checker.props.sensitive = True
         self.activity.checker.connect('clicked', self.activity._checker_cb)
         self.insert(self.activity.checker, -1)
