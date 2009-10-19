@@ -18,7 +18,6 @@
 from __future__ import division
 import gtk
 import cairo
-import paper
 from util import mm
 from util import set_background_color
 from util import write
