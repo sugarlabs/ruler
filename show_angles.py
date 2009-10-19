@@ -1,4 +1,5 @@
 # Copyright 2007 Mitchell N. Charity
+# Copyright 2009 Walter Bender
 #
 # This file is part of Ruler.
 #
@@ -16,9 +17,10 @@
 # along with Ruler.  If not, see <http://www.gnu.org/licenses/>
 
 from __future__ import division
-import paper
 import cairo
 from util import mm
+from util import set_background_color
+from util import set_color
 from math import pi,sin,cos
 
 from colorsys import * #XXX
@@ -26,20 +28,21 @@ from colorsys import * #XXX
 def d2r(d):
     return d/180*pi
 
-def subactivity_init(api):
-    api.declare_subactivity('angles-360', Angles360())
-    api.declare_subactivity('angles-90', Angles90())
-    #api.declare_subactivity('angles-180', Angles90())
+class Angles90():
+    def __init__(self,font,font_bold,w,h):
+        self.font = font
+        self.font_bold = font_bold
+        self.w = w
+        self.h = h
 
-class Angles90(paper.Drawing):
-    def draw(self,c):
-        self.set_background_color('white')
+    def draw(self,c,dpi):
+        set_background_color(c,self.w,self.h)
 
         c.set_antialias(True)
 
-        ox = mm(0)
-        oy = mm(99)
-        d = mm(90)
+        ox = mm(dpi,0)
+        oy = mm(dpi,99)
+        d = mm(dpi,90)
         def xy(angle,m=d):
             return cos(-angle)*m+ox,sin(-angle)*m+oy
         def ray(angle,r0=0,r1=d):
@@ -55,37 +58,43 @@ class Angles90(paper.Drawing):
 
         c.save()
         c.set_line_width(3)
-        c.set_dash([mm(5)])
+        c.set_dash([mm(dpi,5)])
         ray(pi/4)
         c.stroke()
         c.restore()
 
         c.set_line_width(4)
         for a in range(10,81,10):
-            ray(d2r(a),mm(10),mm(85))
+            ray(d2r(a),mm(dpi,10),mm(dpi,85))
         c.stroke()
         c.set_line_width(2)
         for a in range(10,81,10):
-            ray(d2r(a),mm(3),mm(20))
+            ray(d2r(a),mm(dpi,3),mm(dpi,20))
         c.stroke()
 
         c.set_line_width(2)
         for a in range(1,90,1):
-            ray(d2r(a),mm(70),mm(80))
+            ray(d2r(a),mm(dpi,70),mm(dpi,80))
         c.stroke()
         c.set_line_width(2)
         for a in range(0,90,5):
-            ray(d2r(a),mm(20),mm(81))
+            ray(d2r(a),mm(dpi,20),mm(dpi,81))
         c.stroke()
 
-class Angles360(paper.Drawing):
-    def draw(self,c):
-        self.set_background_color('white')
+class Angles360():
+    def __init__(self,font,font_bold,w,h):
+        self.font = font
+        self.font_bold = font_bold
+        self.w = w
+        self.h = h
+
+    def draw(self,c,dpi):
+        set_background_color(c,self.w,self.h)
         c.set_antialias(True)
 
-        ox = mm(75)
-        oy = mm(50)
-        d = mm(44)
+        ox = mm(dpi,75)
+        oy = mm(dpi,50)
+        d = mm(dpi,44)
         def xy(angle,m=d):
             return cos(-angle)*m+ox,sin(-angle)*m+oy
         def ray(angle,r0=0,r1=d):
@@ -106,13 +115,13 @@ class Angles360(paper.Drawing):
             c.stroke()
             c.restore()
 
-        rays(1,mm(35),w=2,r1=mm(43))
-        rays(5,mm(10),w=2)
-        rays(10,mm(10),w=4)
-#        rays(10,mm(3),mm(20),w=2)
+        rays(1,mm(dpi,35),w=2,r1=mm(dpi,43))
+        rays(5,mm(dpi,10),w=2)
+        rays(10,mm(dpi,10),w=4)
+#        rays(10,mm(dpi,3),mm(dpi,20),w=2)
         c.save()
-        #c.set_dash([mm(5)])
-        self.set_color('dark gray')
-        rays(45,0,mm(45),w=6)
+        #c.set_dash([mm(dpi,5)])
+        set_color(c,'dark gray')
+        rays(45,0,mm(dpi,45),w=6)
         c.restore()
-        rays(90,0,mm(45),w=6)
+        rays(90,0,mm(dpi,45),w=6)
