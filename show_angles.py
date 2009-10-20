@@ -38,7 +38,7 @@ class Angles90():
     def draw(self,c,dpi):
         set_background_color(c,self.w,self.h)
 
-        c.set_antialias(True)
+        c.set_antialias(cairo.ANTIALIAS_GRAY)
 
         ox = mm(dpi,0)
         oy = mm(dpi,99)
@@ -90,7 +90,7 @@ class Angles360():
 
     def draw(self,c,dpi):
         set_background_color(c,self.w,self.h)
-        c.set_antialias(True)
+        c.set_antialias(cairo.ANTIALIAS_GRAY)
 
         ox = mm(dpi,75)
         oy = mm(dpi,50)
