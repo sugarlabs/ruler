@@ -16,47 +16,52 @@
 # You should have received a copy of the GNU General Public License
 # along with Ruler.  If not, see <http://www.gnu.org/licenses/>
 
-from __future__ import division
 import cairo
-from util import mm
-from util import set_background_color
+
 from math import pi
 
+from util import mm, dimensions_mm, set_background_color
+
+
 class ScreenOfCircles():
-    def __init__(self,font,font_bold,w,h):
+
+    def __init__(self, font, font_bold, w, h):
         self.font = font
         self.font_bold = font_bold
         self.w = w
         self.h = h
 
-    def draw(self,c,dpi):
-        set_background_color(c,self.w,self.h)
+    def draw(self, c, dpi):
+
+        set_background_color(c, self.w, self.h)
         c.set_antialias(cairo.ANTIALIAS_GRAY)
 
-        def sq(x,y):
-            c.rectangle(x,y,mm(dpi,10),mm(dpi,10))
+        nw, nh = dimensions_mm(dpi, self.w, self.h)
+
+        def sq(x, y):
+            c.rectangle(x, y, mm(dpi, 10), mm(dpi, 10))
             c.fill()
         
-        w=100
-        h=100
-        for xm in range(0,w,20):
-            for ym in range(0,h,20):
-                sq(mm(dpi,xm),mm(dpi,ym))
-        for xm in range(10,w,20):
-            for ym in range(10,h,20):
-                sq(mm(dpi,xm),mm(dpi,ym))
+        w=nw
+        h=nh
+        for xm in range(0, w, 20):
+            for ym in range(0, h, 20):
+                sq(mm(dpi, xm), mm(dpi, ym))
+        for xm in range(10, w, 20):
+            for ym in range(10, h, 20):
+                sq(mm(dpi, xm), mm(dpi, ym))
 
         c.set_line_width(1)
-        c.move_to(mm(dpi,100),0)
-        c.rel_line_to(0,mm(dpi,100))
-        c.rel_line_to(mm(dpi,-100),0)
+        c.move_to(mm(dpi, 100), 0)
+        c.rel_line_to(0, mm(dpi, 100))
+        c.rel_line_to(mm(dpi, -100), 0)
         c.stroke()
 
         c.set_line_width(3)
         v = 0.5
-        c.set_source_rgb(v,v,v)
-        c.move_to(mm(dpi,50),0)
-        c.rel_line_to(0,mm(dpi,100))
-        c.move_to(0,mm(dpi,50))
-        c.rel_line_to(mm(dpi,100),0)
+        c.set_source_rgb(v, v, v)
+        c.move_to(mm(dpi, 50), 0)
+        c.rel_line_to(0, mm(dpi, 100))
+        c.move_to(0, mm(dpi, 50))
+        c.rel_line_to(mm(dpi, 100), 0)
         c.stroke()

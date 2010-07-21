@@ -20,19 +20,23 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 import gobject
+
 import cairo
+
 import os.path
 
 import sugar
 from sugar.activity import activity
 try: # 0.86+ toolbar widgets
+    from sugar.graphics.toolbarbox import ToolbarBox
+    _has_toolbarbox = True
+except ImportError:
+    _has_toolbarbox = False
+if _has_toolbarbox:
     from sugar.bundle.activitybundle import ActivityBundle
     from sugar.activity.widgets import ActivityToolbarButton
     from sugar.activity.widgets import StopButton
-    from sugar.graphics.toolbarbox import ToolbarBox
     from sugar.graphics.toolbarbox import ToolbarButton
-except ImportError:
-    pass
 from sugar.graphics.toolbutton import ToolButton
 from sugar.graphics.menuitem import MenuItem
 from sugar.graphics.icon import Icon
@@ -40,7 +44,7 @@ from sugar.datastore import datastore
 try:
     from sugar.graphics import style
     GRID_CELL_SIZE = style.GRID_CELL_SIZE
-except:
+except ImportError:
     GRID_CELL_SIZE = 0
 
 import logging
@@ -48,7 +52,7 @@ _logger = logging.getLogger("ruler-activity")
 
 from gettext import gettext as _
 
-import util
+from util import get_hardware
 import show_rulers
 import show_grids
 import show_checkers
@@ -68,15 +72,14 @@ class MyCanvas(gtk.DrawingArea):
         cr = self.window.cairo_create()
 
         if self._draw_ruler:
-            # draw lines to create a star
-            self._object.draw(cr,self._dpi)
+            self._object.draw(cr, self._dpi)
 
         # Restrict Cairo to the exposed area; avoid extra work
         cr.rectangle(event.area.x, event.area.y,
                      event.area.width, event.area.height)
         cr.clip()
 
-    def add_a_ruler(self,r):
+    def add_a_ruler(self, r):
         self._draw_ruler = True
         self._object = r
         self.queue_draw()     
@@ -94,7 +97,7 @@ class MyCanvas(gtk.DrawingArea):
 class RulerActivity(activity.Activity):
 
     def __init__(self, handle):
-        super(RulerActivity,self).__init__(handle)
+        super(RulerActivity, self).__init__(handle)
 
         _font = 'helvetica 12'
         _font_bold = 'helvetica bold 12'
@@ -114,19 +117,23 @@ class RulerActivity(activity.Activity):
             dpi = self.metadata['dpi']
             _logger.debug("Read dpi: " + str(dpi))
             self._canvas.set_dpi(int(dpi))
-        except:
-            if os.path.exists('/sys/power/olpc-pm'):
+        except ValueError:
+            if get_hardware()[0:2] == 'XO':
                 self._canvas.set_dpi(200) # OLPC XO
             else:
-                self._canvas.set_dpi(100) # Just a guess
+                self._canvas.set_dpi(96) # Just a guess
 
         # Create instances of our graphics
-        self._r = show_rulers.ScreenOfRulers(_font,_font_bold,_width,_height)
-        self._gcm = show_grids.ScreenGrid_cm(_font,_font_bold,_width,_height)
-        self._gmm = show_grids.ScreenGrid_mm(_font,_font_bold,_width,_height)
-        self._a90 = show_angles.Angles90(_font,_font_bold,_width,_height)
-        self._a360 = show_angles.Angles360(_font,_font_bold,_width,_height)
-        self._c = show_checkers.ScreenOfCircles(_font,_font_bold,_width,_height)
+        self._r = show_rulers.ScreenOfRulers(_font, _font_bold, _width,
+                                             _height)
+        self._gcm = show_grids.ScreenGrid_cm(_font, _font_bold, _width,
+                                             _height)
+        self._gmm = show_grids.ScreenGrid_mm(_font, _font_bold, _width,
+                                             _height)
+        self._a90 = show_angles.Angles90(_font, _font_bold, _width, _height)
+        self._a360 = show_angles.Angles360(_font, _font_bold, _width, _height)
+        self._c = show_checkers.ScreenOfCircles(_font, _font_bold, _width,
+                                                _height)
 
         # start with a ruler
         self._current = self._r
@@ -139,7 +146,7 @@ class RulerActivity(activity.Activity):
         #
         # We need some toolbars
         #
-        try:
+        if _has_toolbarbox:
             # Use 0.86 toolbar design
             toolbar_box = ToolbarBox()
 
@@ -211,7 +218,7 @@ class RulerActivity(activity.Activity):
             self.set_toolbar_box(toolbar_box)
             toolbar_box.show()
 
-        except NameError:
+        else:
             # Use pre-0.86 toolbar design
             toolbox = activity.ActivityToolbox(self)
             self.set_toolbox(toolbox)

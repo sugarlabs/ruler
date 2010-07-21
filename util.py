@@ -20,11 +20,45 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 import gobject
+
+import dbus
+from os import path
+
 import pango
 import pangocairo
 
-def mm(dpi,n):
+
+def get_hardware():
+    """ Determine whether we are using XO 1.0, 1.5, or "unknown" hardware """
+    bus = dbus.SystemBus()
+
+    comp_obj = bus.get_object('org.freedesktop.Hal',
+                              '/org/freedesktop/Hal/devices/computer')
+    dev = dbus.Interface(comp_obj, 'org.freedesktop.Hal.Device')
+    if dev.PropertyExists('system.hardware.vendor') and \
+            dev.PropertyExists('system.hardware.version'):
+        if dev.GetProperty('system.hardware.vendor') == 'OLPC':
+            if dev.GetProperty('system.hardware.version') == '1.5':
+                return 'XO15'
+            else:
+                return 'XO1'
+        else:
+            return 'UNKNOWN'
+    elif path.exists('/etc/olpc-release') or \
+         path.exists('/sys/power/olpc-pm'):
+        return 'XO1'
+    else:
+        return 'UNKNOWN'
+
+
+def mm(dpi, n):
+    """ Convert n pixels to units mm """
     return n / 25.40 * dpi
+
+
+def dimensions_mm(dpi, w, h):
+    """ Return screen width, height in units mm """
+    return int(w * 25.40 / dpi), int(h * 25.40 / dpi)
 
 """
 def calc_dpmm():
@@ -58,39 +92,41 @@ def calc_dpi():
 #
 # Cairo-related utilities
 #
-def set_background_color(c,w,h):
+def set_background_color(c, w, h):
     c.save()
-    c.rectangle(0,0,w,h)
+    c.rectangle(0, 0, w, h)
     c.set_source_color(gtk.gdk.color_parse('white'))
     c.fill()
     c.restore()
 
-def set_color(c,name):
+
+def set_color(c, name):
     c.set_source_color(gtk.gdk.color_parse(name))
 
-def write(c,text,name,size,centered=False,at_top=False):
+
+def write(c, text, name, size, centered=False, at_top=False):
     pc = pangocairo.CairoContext(c)
 
     font = pango.FontDescription(name)
-    font.set_size(int(round(size*pango.SCALE)))
+    font.set_size(int(round(size * pango.SCALE)))
     lo = pc.create_layout()
     lo.set_font_description(font)
     lo.set_text("X")
     extent = [x/pango.SCALE for x in lo.get_extents()[1]]
-    ex,ey = extent[2],extent[3]
+    ex, ey = extent[2], extent[3]
     baseline_offset = -ey
     if not at_top:
-        c.rel_move_to(0,baseline_offset)
+        c.rel_move_to(0, baseline_offset)
 
     lo = pc.create_layout()
     lo.set_font_description(font)
     lo.set_text(text)
     extent =[x/pango.SCALE for x in lo.get_extents()[1]]
-    ex,ey = extent[2],extent[3]
+    ex, ey = extent[2], extent[3]
     if centered:
-        c.rel_move_to(-ex/2,0)
+        c.rel_move_to(-ex / 2, 0)
     pc.show_layout(lo)
-    c.rel_move_to(ex,0)
+    c.rel_move_to(ex, 0)
 
     if not at_top:
-        c.rel_move_to(0,-baseline_offset)
+        c.rel_move_to(0, -baseline_offset)
