@@ -20,7 +20,8 @@ import cairo
 
 from math import pi, sin, cos
 
-from util import mm, dimensions_mm, set_background_color, set_color
+from util import mm, dimensions_mm, set_background_color, set_color, \
+                 get_hardware
 
 from colorsys import * #XXX
 
@@ -37,16 +38,20 @@ class Angles90():
         self.font_bold = font_bold
         self.w = w
         self.h = h
+        self.hw = get_hardware()
 
     def draw(self, c, dpi):
         set_background_color(c, self.w, self.h)
         c.set_antialias(cairo.ANTIALIAS_GRAY)
 
         nw, nh = dimensions_mm(dpi, self.w, self.h)
-        scale = 500./nh
+        if self.hw[0:2] == 'XO':
+            scale = 1.
+        else:
+            scale = 500./nh
 
         ox = mm(dpi, 0)
-        oy = mm(dpi, nh)
+        oy = mm(dpi, 99 * scale)
         d = mm(dpi, 90 * scale)
 
         def xy(angle, m=d):
@@ -96,13 +101,17 @@ class Angles360():
         self.font_bold = font_bold
         self.w = w
         self.h = h
+        self.hw = get_hardware()
 
     def draw(self, c, dpi):
         set_background_color(c, self.w, self.h)
         c.set_antialias(cairo.ANTIALIAS_GRAY)
 
         nw, nh = dimensions_mm(dpi, self.w, self.h)
-        scale = 500./nh
+        if self.hw[0:2] == 'XO':
+            scale = 1.
+        else:
+            scale = 500./nh
 
         ox = mm(dpi, nw / 2)
         oy = mm(dpi, nh / 2)

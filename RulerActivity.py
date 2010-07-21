@@ -113,14 +113,16 @@ class RulerActivity(activity.Activity):
         _height = gtk.gdk.screen_height()-GRID_CELL_SIZE
 
         # Read the dpi from the Journal
-        try:
-            dpi = self.metadata['dpi']
-            _logger.debug("Read dpi: " + str(dpi))
-            self._canvas.set_dpi(int(dpi))
-        except ValueError:
-            if get_hardware()[0:2] == 'XO':
-                self._canvas.set_dpi(200) # OLPC XO
-            else:
+        if get_hardware()[0:2] == 'XO':
+            self._canvas.set_dpi(200) # OLPC XO
+            self.known_dpi = True
+        else:
+            self.known_dpi = False
+            try:
+                dpi = self.metadata['dpi']
+                _logger.debug("Read dpi: " + str(dpi))
+                self._canvas.set_dpi(int(dpi))
+            except KeyError:
                 self._canvas.set_dpi(96) # Just a guess
 
         # Create instances of our graphics
@@ -187,21 +189,22 @@ class RulerActivity(activity.Activity):
             toolbar_box.toolbar.insert(self.checker, -1)
             self.checker.show()
 
-            separator = gtk.SeparatorToolItem()
-            separator.show()
-            toolbar_box.toolbar.insert(separator, -1)
+            if not self.known_dpi:
+                separator = gtk.SeparatorToolItem()
+                separator.show()
+                toolbar_box.toolbar.insert(separator, -1)
 
-            dpi = self._canvas.get_dpi()
-            self._dpi_spin_adj = gtk.Adjustment(dpi, 72, 200, 2, 32, 0)
-            self._dpi_spin = gtk.SpinButton(self._dpi_spin_adj, 0, 0)
-            self._dpi_spin_id = self._dpi_spin.connect('value-changed',
-                                                       self._dpi_spin_cb)
-            self._dpi_spin.set_numeric(True)
-            self._dpi_spin.show()
-            self.tool_item_dpi = gtk.ToolItem()
-            self.tool_item_dpi.add(self._dpi_spin)
-            toolbar_box.toolbar.insert(self.tool_item_dpi, -1)
-            self.tool_item_dpi.show()
+                dpi = self._canvas.get_dpi()
+                self._dpi_spin_adj = gtk.Adjustment(dpi, 72, 200, 2, 32, 0)
+                self._dpi_spin = gtk.SpinButton(self._dpi_spin_adj, 0, 0)
+                self._dpi_spin_id = self._dpi_spin.connect('value-changed',
+                                                           self._dpi_spin_cb)
+                self._dpi_spin.set_numeric(True)
+                self._dpi_spin.show()
+                self.tool_item_dpi = gtk.ToolItem()
+                self.tool_item_dpi.add(self._dpi_spin)
+                toolbar_box.toolbar.insert(self.tool_item_dpi, -1)
+                self.tool_item_dpi.show()
 
             separator = gtk.SeparatorToolItem()
             separator.props.draw = False
@@ -322,21 +325,22 @@ class ProjectToolbar(gtk.Toolbar):
         self.insert(self.activity.checker, -1)
         self.activity.checker.show()
 
-        separator = gtk.SeparatorToolItem()
-        separator.set_draw(True)
-        self.insert(separator, -1)
-        separator.show()
+        if not self.activity.known_dpi:
+            separator = gtk.SeparatorToolItem()
+            separator.set_draw(True)
+            self.insert(separator, -1)
+            separator.show()
 
-        dpi = self.activity._canvas.get_dpi()
-        self.activity._dpi_spin_adj = gtk.Adjustment(dpi, 72, 200, 2, 32, 0)
-        self.activity._dpi_spin = \
-            gtk.SpinButton(self.activity._dpi_spin_adj, 0, 0)
-        self.activity._dpi_spin_id = self.activity._dpi_spin.connect(
-                                    'value-changed', self.activity._dpi_spin_cb)
-        self.activity._dpi_spin.set_numeric(True)
-        self.activity._dpi_spin.show()
-        self.activity.tool_item_dpi = gtk.ToolItem()
-        self.activity.tool_item_dpi.add(self.activity._dpi_spin)
-        self.insert(self.activity.tool_item_dpi, -1)
-        self.activity.tool_item_dpi.show()
+            dpi = self.activity._canvas.get_dpi()
+            self.activity._dpi_spin_adj = gtk.Adjustment(dpi, 72, 200, 2, 32, 0)
+            self.activity._dpi_spin = \
+                gtk.SpinButton(self.activity._dpi_spin_adj, 0, 0)
+            self.activity._dpi_spin_id = self.activity._dpi_spin.connect(
+                'value-changed', self.activity._dpi_spin_cb)
+            self.activity._dpi_spin.set_numeric(True)
+            self.activity._dpi_spin.show()
+            self.activity.tool_item_dpi = gtk.ToolItem()
+            self.activity.tool_item_dpi.add(self.activity._dpi_spin)
+            self.insert(self.activity.tool_item_dpi, -1)
+            self.activity.tool_item_dpi.show()
 

@@ -28,6 +28,7 @@ class ScreenOfRulers():
         self.font_bold = font_bold
         self.w = w
         self.h = h
+        self.hw = get_hardware()
 
     def draw(self, c, dpi):
         set_background_color(c, self.w, self.h)
@@ -38,7 +39,7 @@ class ScreenOfRulers():
         self.draw_ruler_pair(c, dpi, mm(dpi, 20))
 
         # only calculate offsets if on an OLPC XO-1
-        if get_hardware()[0:2] == 'XO':
+        if self.hw[0:2] == 'XO':
             offset_of_xo_side_from_screen = mm(dpi, -38.5) #XXX needs checking
             c.move_to(offset_of_xo_side_from_screen,  mm(dpi, 65))
             self.draw_cm_ruler(c, dpi, 180)
