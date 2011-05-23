@@ -47,12 +47,12 @@ class ScreenOfRulers():
             
             c.save()
             c.move_to(mm(dpi, 20), mm(dpi, 75))
-            write(c, _('Use this ruler from the outside edge of display.'),
+            write(c, _('Use this ruler from the outside edge of the computer.'),
                   self.font, mm(dpi, 4))
             c.restore()
 
             offset_of_molding_from_screen = mm(dpi, -0.4) #XXX +- 0.2 ??
-            c.move_to(offset_of_molding_from_screen,  mm(dpi, 100))
+            c.move_to(offset_of_molding_from_screen,  mm(dpi, 95))
             self.draw_cm_ruler(c, dpi, 150)
 
         else:
@@ -60,10 +60,6 @@ class ScreenOfRulers():
             c.move_to(offset_of_xo_side_from_screen,  mm(dpi, 65))
             self.draw_cm_ruler(c, dpi, int(nw / 10 * 10))
             
-            offset_of_molding_from_screen = mm(dpi, 0)
-            c.move_to(offset_of_molding_from_screen,  mm(dpi, 100))
-            self.draw_cm_ruler(c, dpi, int(nw / 10 * 10))
-
     def draw_ruler_pair(self, c, dpi, y):
 
         c.move_to(mm(dpi, 10), y)
