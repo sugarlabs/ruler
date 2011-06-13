@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-10-19 20:32+0000\n"
+"PO-Revision-Date: 2011-06-13 12:12+0200\n"
+"Last-Translator:  <aman.maharjan@olenepal.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.1\n"
+
+#: activity/activity.info:2
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:157
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:292
+msgid "Ruler"
+msgstr "रुलर "
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:165
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:300
+msgid "Grid"
+msgstr "ग्रिड"
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:173
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:308
+msgid "Angles"
+msgstr "कोण"
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:181
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:316
+msgid "Checker"
+msgstr "जाँच"
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:224
+msgid "Rulers"
+msgstr "रुलरहरु"
