@@ -37,6 +37,7 @@ if _has_toolbarbox:
     from sugar.activity.widgets import ActivityToolbarButton
     from sugar.activity.widgets import StopButton
     from sugar.graphics.toolbarbox import ToolbarButton
+from sugar.graphics.radiotoolbutton import RadioToolButton
 from sugar.graphics.toolbutton import ToolButton
 from sugar.graphics.menuitem import MenuItem
 from sugar.graphics.icon import Icon
@@ -99,6 +100,10 @@ class RulerActivity(activity.Activity):
     def __init__(self, handle):
         super(RulerActivity, self).__init__(handle)
 
+        self.button_dict = {}
+        self.callback_dict = {}
+        self._ready = False
+
         _font = 'helvetica 12'
         _font_bold = 'helvetica bold 12'
 
@@ -157,37 +162,32 @@ class RulerActivity(activity.Activity):
             toolbar_box.toolbar.insert(activity_button, 0)
             activity_button.show()
 
-            # Show rulers
-            self.rulers = ToolButton( "ruler" )
-            self.rulers.set_tooltip(_('Ruler'))
-            self.rulers.props.sensitive = True
-            self.rulers.connect('clicked', self._rulers_cb)
+            self.rulers = MyButton(self, 'ruler',
+                                   icon_name='ruler',
+                                   callback=self._rulers_cb,
+                                   tooltip=_('Ruler'))
             toolbar_box.toolbar.insert(self.rulers, -1)
-            self.rulers.show()
 
-            # Show grids
-            self.grids = ToolButton( "grid-a" )
-            self.grids.set_tooltip(_('Grid'))
-            self.grids.props.sensitive = True
-            self.grids.connect('clicked', self._grids_cb)
+            self.grids = MyButton(self, 'grids',
+                                  icon_name='grid-a',
+                                  callback=self._grids_cb,
+                                  tooltip=_('Grid'),
+                                  group=self.rulers)
             toolbar_box.toolbar.insert(self.grids, -1)
-            self.grids.show()
 
-            # Show angles
-            self.angles = ToolButton( "angles-90" )
-            self.angles.set_tooltip(_('Angles'))
-            self.angles.props.sensitive = True
-            self.angles.connect('clicked', self._angles_cb)
+            self.angles = MyButton(self, 'angles',
+                                   icon_name='angles-90',
+                                   callback=self._angles_cb,
+                                   tooltip=_('Angles'),
+                                   group=self.rulers)
             toolbar_box.toolbar.insert(self.angles, -1)
-            self.angles.show()
 
-            # Show checker
-            self.checker = ToolButton( "checker" )
-            self.checker.set_tooltip(_('Checker'))
-            self.checker.props.sensitive = True
-            self.checker.connect('clicked', self._checker_cb)
+            self.checker = MyButton(self, 'checker',
+                                    icon_name='checker',
+                                    callback=self._checker_cb,
+                                    tooltip=_('Checker'),
+                                    group=self.rulers)
             toolbar_box.toolbar.insert(self.checker, -1)
-            self.checker.show()
 
             if not self.known_dpi:
                 separator = gtk.SeparatorToolItem()
@@ -232,44 +232,71 @@ class RulerActivity(activity.Activity):
             toolbox.show()
             toolbox.set_current_toolbar(1)
 
-        self.show_all() 
+        self.show_all()
+
+        # Restore state if previously saved
+        self._ready = True
+        if 'ruler' in self.metadata and \
+           self.metadata['ruler'] in self.button_dict:
+            _logger.debug('restoring %s', self.metadata['ruler'])
+            self.button_dict[self.metadata['ruler']].set_active(True)
+            self.callback_dict[self.metadata['ruler']]
+        else:
+            self._rulers_cb()
+            self.rulers.set_active(True)
 
     #
     # Button callbacks
     #
-    def _rulers_cb(self, button):
-        self._current = self._r
-        self._canvas.add_a_ruler(self._current)
-        return True
+    def _rulers_cb(self, button=None):
+        if self._ready:
+            self._current = self._r
+            self._canvas.add_a_ruler(self._current)
+            _logger.debug('selecting ruler')
+            self.metadata['ruler'] = 'ruler'
+        return False
 
-    def _grids_cb(self, button):
-        if self._grids_mode == "cm":
-            self._current = self._gcm
-            self.grids.set_icon("grid-c")
-            self._grids_mode = "mm"
-        else:
-            self._current = self._gmm
-            self.grids.set_icon("grid-a")
-            self._grids_mode = "cm"
-        self._canvas.add_a_ruler(self._current)
-        return True
+    def _grids_cb(self, button=None):
+        if self._ready:
+            if self._grids_mode == "cm":
+                self._current = self._gcm
+                if hasattr(self, 'grids'):
+                    self.grids.set_icon("grid-c")
+                self._grids_mode = "mm"
+            else:
+                self._current = self._gmm
+                if hasattr(self, 'grids'):
+                    self.grids.set_icon("grid-a")
+                self._grids_mode = "cm"
+            self._canvas.add_a_ruler(self._current)
+            _logger.debug('selecting grids')
+            self.metadata['ruler'] = 'grids'
+        return False
 
-    def _angles_cb(self, button):
-        if self._angles_mode == "90":
-            self._current = self._a90
-            self.angles.set_icon("angles-360")
-            self._angles_mode = "360"
-        else:
-            self._current = self._a360
-            self.angles.set_icon("angles-90")
-            self._angles_mode = "90"
-        self._canvas.add_a_ruler(self._current)
-        return True
+    def _angles_cb(self, button=None):
+        if self._ready:
+            if self._angles_mode == "90":
+                self._current = self._a90
+                if hasattr(self, 'angles'):
+                    self.angles.set_icon("angles-360")
+                    self._angles_mode = "360"
+            else:
+                self._current = self._a360
+                if hasattr(self, 'angles'):
+                    self.angles.set_icon("angles-90")
+                    self._angles_mode = "90"
+            self._canvas.add_a_ruler(self._current)
+            _logger.debug('selecting angles')
+            self.metadata['ruler'] = 'angles'
+        return False
 
-    def _checker_cb(self, button):
-        self._current = self._c
-        self._canvas.add_a_ruler(self._current)
-        return True
+    def _checker_cb(self, button=None):
+        if self._ready:
+            self._current = self._c
+            self._canvas.add_a_ruler(self._current)
+            _logger.debug('selecting checker')
+            self.metadata['ruler'] = 'checker'
+        return False
 
     def _dpi_spin_cb(self, button):
         self._canvas.set_dpi(self._dpi_spin.get_value_as_int())
@@ -344,3 +371,31 @@ class ProjectToolbar(gtk.Toolbar):
             self.insert(self.activity.tool_item_dpi, -1)
             self.activity.tool_item_dpi.show()
 
+
+class MyButton(RadioToolButton):
+
+    def __init__(self, parent, name, icon_name='', callback=None,
+                 tooltip=None, group=None):
+        RadioToolButton.__init__(self)
+
+        if icon_name == '':
+            icon_name = 'computer-xo'
+        icon = Icon(icon_name=icon_name,
+                    icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR)
+        self.set_icon_widget(icon)
+        icon.show()
+        if tooltip is not None:
+            self.set_tooltip(tooltip)
+        self.props.sensitive = True
+        self.connect('clicked', callback)
+        self.set_group(group)
+        self.show()
+
+        parent.button_dict[name] = self
+        parent.callback_dict[name] = callback
+
+    def set_icon(self, name):
+        icon = Icon(icon_name=name,
+                    icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR)
+        self.set_icon_widget(icon)
+        icon.show()
