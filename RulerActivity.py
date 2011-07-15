@@ -244,11 +244,13 @@ class RulerActivity(activity.Activity):
         if 'ruler' in self.metadata and \
            self.metadata['ruler'] in self.button_dict:
             _logger.debug('restoring %s', self.metadata['ruler'])
-            self.button_dict[self.metadata['ruler']].set_active(True)
+            if HAS_TOOLARBOX:
+                self.button_dict[self.metadata['ruler']].set_active(True)
             self.callback_dict[self.metadata['ruler']]
         else:
             self._rulers_cb()
-            self.rulers.set_active(True)
+            if HAS_TOOLARBOX:
+                self.rulers.set_active(True)
 
     #
     # Button callbacks
