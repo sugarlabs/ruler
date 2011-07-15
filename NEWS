@@ -1,3 +1,9 @@
+9
+
+* Using radio buttons to make it clear as to which ruler is selected
+* Save/restore state of ruler in Journal
+* Disabling sharing
+
 8
 
 * added message explaining 'short' ruler on XO (#2738)
