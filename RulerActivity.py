@@ -153,6 +153,8 @@ class RulerActivity(activity.Activity):
         #
         # We need some toolbars
         #
+        self.max_participants = 1
+
         if _has_toolbarbox:
             # Use 0.86 toolbar design
             toolbar_box = ToolbarBox()
