@@ -1,5 +1,5 @@
 # Copyright (c) 2007 Mitchell N. Charity
-# Copyright (c) 2009, Walter Bender
+# Copyright (c) 2009-2011 Walter Bender
 #
 # This file is part of Ruler.
 #
@@ -27,16 +27,18 @@ import os.path
 
 import sugar
 from sugar.activity import activity
-try: # 0.86+ toolbar widgets
+try:  # 0.86+ toolbar widgets
     from sugar.graphics.toolbarbox import ToolbarBox
-    _has_toolbarbox = True
+    HAS_TOOLARBOX = True
 except ImportError:
-    _has_toolbarbox = False
-if _has_toolbarbox:
+    HAS_TOOLARBOX = False
+
+if HAS_TOOLARBOX:
     from sugar.bundle.activitybundle import ActivityBundle
     from sugar.activity.widgets import ActivityToolbarButton
     from sugar.activity.widgets import StopButton
     from sugar.graphics.toolbarbox import ToolbarButton
+
 from sugar.graphics.radiotoolbutton import RadioToolButton
 from sugar.graphics.toolbutton import ToolButton
 from sugar.graphics.menuitem import MenuItem
@@ -59,8 +61,9 @@ import show_grids
 import show_checkers
 import show_angles
 
-# Create a GTK+ widget on which we will draw using Cairo
+
 class MyCanvas(gtk.DrawingArea):
+    ''' Create a GTK+ widget on which we will draw using Cairo '''
 
     def __init__(self):
         gtk.DrawingArea.__init__(self)
@@ -83,7 +86,7 @@ class MyCanvas(gtk.DrawingArea):
     def add_a_ruler(self, r):
         self._draw_ruler = True
         self._object = r
-        self.queue_draw()     
+        self.queue_draw()
 
     def get_dpi(self):
         return self._dpi
@@ -115,11 +118,11 @@ class RulerActivity(activity.Activity):
         self._canvas.show()
 
         _width = gtk.gdk.screen_width()
-        _height = gtk.gdk.screen_height()-GRID_CELL_SIZE
+        _height = gtk.gdk.screen_height() - GRID_CELL_SIZE
 
         # Read the dpi from the Journal
         if get_hardware()[0:2] == 'XO':
-            self._canvas.set_dpi(200) # OLPC XO
+            self._canvas.set_dpi(200)  # OLPC XO
             self.known_dpi = True
         else:
             self.known_dpi = False
@@ -128,7 +131,7 @@ class RulerActivity(activity.Activity):
                 _logger.debug("Read dpi: " + str(dpi))
                 self._canvas.set_dpi(int(dpi))
             except KeyError:
-                self._canvas.set_dpi(96) # Just a guess
+                self._canvas.set_dpi(96)  # Just a guess
 
         # Create instances of our graphics
         self._r = show_rulers.ScreenOfRulers(_font, _font_bold, _width,
@@ -155,7 +158,7 @@ class RulerActivity(activity.Activity):
         #
         self.max_participants = 1
 
-        if _has_toolbarbox:
+        if HAS_TOOLARBOX:
             # Use 0.86 toolbar design
             toolbar_box = ToolbarBox()
 
@@ -229,7 +232,7 @@ class RulerActivity(activity.Activity):
             self.set_toolbox(toolbox)
 
             self.projectToolbar = ProjectToolbar(self)
-            toolbox.add_toolbar( _('Rulers'), self.projectToolbar )
+            toolbox.add_toolbar(_('Rulers'), self.projectToolbar)
 
             toolbox.show()
             toolbox.set_current_toolbar(1)
@@ -305,25 +308,22 @@ class RulerActivity(activity.Activity):
         self._canvas.add_a_ruler(self._current)
         return
 
-    """
-    Write the dpi to the Journal
-    """
     def write_file(self, file_path):
-        dpi =  self._canvas.get_dpi()
+        ''' Write the dpi to the Journal '''
+        dpi = self._canvas.get_dpi()
         _logger.debug("Write dpi: " + str(dpi))
         self.metadata['dpi'] = str(dpi)
 
-#
-# Project toolbar for pre-0.86 toolbars
-#
+
 class ProjectToolbar(gtk.Toolbar):
+    ''' Project toolbar for pre-0.86 toolbars '''
 
     def __init__(self, pc):
         gtk.Toolbar.__init__(self)
         self.activity = pc
 
         # Ruler
-        self.activity.rulers = ToolButton( "ruler" )
+        self.activity.rulers = ToolButton("ruler")
         self.activity.rulers.set_tooltip(_('Ruler'))
         self.activity.rulers.props.sensitive = True
         self.activity.rulers.connect('clicked', self.activity._rulers_cb)
@@ -331,7 +331,7 @@ class ProjectToolbar(gtk.Toolbar):
         self.activity.rulers.show()
 
         # Grid
-        self.activity.grids = ToolButton( "grid-a" )
+        self.activity.grids = ToolButton("grid-a")
         self.activity.grids.set_tooltip(_('Grid'))
         self.activity.grids.props.sensitive = True
         self.activity.grids.connect('clicked', self.activity._grids_cb)
@@ -339,7 +339,7 @@ class ProjectToolbar(gtk.Toolbar):
         self.activity.grids.show()
 
         # Angles
-        self.activity.angles = ToolButton( "angles-90" )
+        self.activity.angles = ToolButton("angles-90")
         self.activity.angles.set_tooltip(_('Angles'))
         self.activity.angles.props.sensitive = True
         self.activity.angles.connect('clicked', self.activity._angles_cb)
@@ -347,7 +347,7 @@ class ProjectToolbar(gtk.Toolbar):
         self.activity.angles.show()
 
         # Checker
-        self.activity.checker = ToolButton( "checker" )
+        self.activity.checker = ToolButton("checker")
         self.activity.checker.set_tooltip(_('Checker'))
         self.activity.checker.props.sensitive = True
         self.activity.checker.connect('clicked', self.activity._checker_cb)
@@ -361,7 +361,8 @@ class ProjectToolbar(gtk.Toolbar):
             separator.show()
 
             dpi = self.activity._canvas.get_dpi()
-            self.activity._dpi_spin_adj = gtk.Adjustment(dpi, 72, 200, 2, 32, 0)
+            self.activity._dpi_spin_adj = gtk.Adjustment(
+                dpi, 72, 200, 2, 32, 0)
             self.activity._dpi_spin = \
                 gtk.SpinButton(self.activity._dpi_spin_adj, 0, 0)
             self.activity._dpi_spin_id = self.activity._dpi_spin.connect(
