@@ -48,7 +48,7 @@ class Angles90():
         if self.hw[0:2] == 'XO':
             scale = 1.
         else:
-            scale = 500./nh
+            scale = 200./nh
 
         ox = mm(dpi, 0)
         oy = mm(dpi, 99 * scale)
@@ -111,7 +111,7 @@ class Angles360():
         if self.hw[0:2] == 'XO':
             scale = 1.
         else:
-            scale = 500./nh
+            scale = 200./nh
 
         ox = mm(dpi, nw / 2)
         oy = mm(dpi, nh / 2)
