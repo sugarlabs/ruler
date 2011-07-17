@@ -2,20 +2,42 @@
 # Copyright (C) 2007 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-29 16:45-0500\n"
-"PO-Revision-Date: 2007-11-29 17:35-0500\n"
-"Last-Translator:  <olpc@xo-12-34-56.localdomain>\n"
+"POT-Creation-Date: 2009-10-19 20:32+0000\n"
+"PO-Revision-Date: 2011-07-18 00:06+0200\n"
+"Last-Translator: Markus <m.slg@gmx.de>\n"
 "Language-Team: German\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.1\n"
 
 #: activity/activity.info:2
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:157
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:292
 msgid "Ruler"
 msgstr "Lineal"
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:165
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:300
+msgid "Grid"
+msgstr "Gitter"
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:173
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:308
+msgid "Angles"
+msgstr "Winkel"
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:181
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:316
+msgid "Checker"
+msgstr "Karo"
+
+#: /home/walter/Activities/Ruler.activity/RulerActivity.py:224
+msgid "Rulers"
+msgstr "Lineale"
