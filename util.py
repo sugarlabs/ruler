@@ -22,33 +22,47 @@ import gtk
 import gobject
 
 import dbus
-from os import path
+import os
 
 import pango
 import pangocairo
 
+XO1 = 'xo1'
+XO15 = 'xo1.5'
+XO175 = 'xo1.75'
+UNKNOWN = 'unknown'
+
 
 def get_hardware():
     """ Determine whether we are using XO 1.0, 1.5, or "unknown" hardware """
-    bus = dbus.SystemBus()
-
-    comp_obj = bus.get_object('org.freedesktop.Hal',
-                              '/org/freedesktop/Hal/devices/computer')
-    dev = dbus.Interface(comp_obj, 'org.freedesktop.Hal.Device')
-    if dev.PropertyExists('system.hardware.vendor') and \
-            dev.PropertyExists('system.hardware.version'):
-        if dev.GetProperty('system.hardware.vendor') == 'OLPC':
-            if dev.GetProperty('system.hardware.version') == '1.5':
-                return 'XO15'
-            else:
-                return 'XO1'
+    product = _get_dmi('product_name')
+    if product is None:
+        if os.path.exists('/etc/olpc-release') or \
+           os.path.exists('/sys/power/olpc-pm'):
+            return XO1
+        elif os.path.exists('/sys/devices/platform/lis3lv02d/position'):
+            return XO175  # FIXME: temporary check for XO 1.75
         else:
-            return 'UNKNOWN'
-    elif path.exists('/etc/olpc-release') or \
-         path.exists('/sys/power/olpc-pm'):
-        return 'XO1'
+            return UNKNOWN
+    if product != 'XO':
+        return UNKNOWN
+    version = _get_dmi('product_version')
+    if version == '1':
+        return XO1
+    elif version == '1.5':
+        return XO15
     else:
-        return 'UNKNOWN'
+        return XO175
+
+
+def _get_dmi(node):
+    ''' The desktop management interface should be a reliable source
+    for product and version information. '''
+    path = os.path.join('/sys/class/dmi/id', node)
+    try:
+        return open(path).readline().strip()
+    except:
+        return None
 
 
 def mm(dpi, n):
