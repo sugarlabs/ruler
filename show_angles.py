@@ -45,7 +45,7 @@ class Angles90():
         c.set_antialias(cairo.ANTIALIAS_GRAY)
 
         nw, nh = dimensions_mm(dpi, self.w, self.h)
-        if self.hw[0:2] == 'XO':
+        if self.hw[0:2] == 'xo':
             scale = 1.
         else:
             scale = 200./nh
@@ -108,7 +108,7 @@ class Angles360():
         c.set_antialias(cairo.ANTIALIAS_GRAY)
 
         nw, nh = dimensions_mm(dpi, self.w, self.h)
-        if self.hw[0:2] == 'XO':
+        if self.hw[0:2] == 'xo':
             scale = 1.
         else:
             scale = 200./nh

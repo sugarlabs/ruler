@@ -121,7 +121,7 @@ class RulerActivity(activity.Activity):
         _height = gtk.gdk.screen_height() - GRID_CELL_SIZE
 
         # Read the dpi from the Journal
-        if get_hardware()[0:2] == 'XO':
+        if get_hardware()[0:2] == 'xo':
             self._canvas.set_dpi(200)  # OLPC XO
             self.known_dpi = True
         else:
