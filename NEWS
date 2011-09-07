@@ -1,3 +1,7 @@
+12
+
+* removed untranslated languages that caused problems when building rpm
+
 11
 
 * Add support for XO 1.75, remove dependency on HAL
