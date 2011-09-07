@@ -19,3 +19,23 @@ msgstr ""
 #: activity/activity.info:2
 msgid "Ruler"
 msgstr "Regla"
+
+#: show_rulers.py:50
+msgid "Use this ruler from the outside edge of the computer."
+msgstr "Use esta regla desde el borde exterior de la pantalla."
+
+#: RulerActivity.py:170 RulerActivity.py:306
+msgid "Grid"
+msgstr "Grid"
+
+#: RulerActivity.py:178 RulerActivity.py:314
+msgid "Angles"
+msgstr "Ángulos"
+
+#: RulerActivity.py:186 RulerActivity.py:322
+msgid "Checker"
+msgstr "Tablero de damas"
+
+#: RulerActivity.py:230
+msgid "Rulers"
+msgstr "Reglas"
