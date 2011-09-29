@@ -3,6 +3,6 @@ name = Ruler
 bundle_id = com.laptop.Ruler
 exec = sugar-activity RulerActivity.RulerActivity
 icon = activity-ruler
-activity_version = 11
+activity_version = 13
 show_launcher = yes
 license = GPLv3+
