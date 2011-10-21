@@ -6,38 +6,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-19 20:32+0000\n"
-"PO-Revision-Date: 2011-06-13 18:27+0200\n"
-"Last-Translator: <jcubillo@fundacionqt.org>\n"
+"POT-Creation-Date: 2011-05-23 16:56-0400\n"
+"PO-Revision-Date: 2011-09-28 13:52+0200\n"
+"Last-Translator: Gonzalo <godiard@sugarlabs.org>\n"
 "Language-Team: Spanish\n"
-"Language: es\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Pootle 2.0.5\n"
 
-#: activity/activity.info:2
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:157
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:292
+#: activity/activity.info:2 RulerActivity.py:162 RulerActivity.py:298
 msgid "Ruler"
 msgstr "Regla"
 
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:165
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:300
+#: show_rulers.py:50
+msgid "Use this ruler from the outside edge of the computer."
+msgstr "Usa esta regla desde el borde de la computadora."
+
+#: RulerActivity.py:170 RulerActivity.py:306
 msgid "Grid"
 msgstr "Cuadrícula"
 
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:173
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:308
+#: RulerActivity.py:178 RulerActivity.py:314
 msgid "Angles"
 msgstr "Ángulos"
 
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:181
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:316
+#: RulerActivity.py:186 RulerActivity.py:322
 msgid "Checker"
 msgstr "Tablero"
 
-#: /home/walter/Activities/Ruler.activity/RulerActivity.py:224
+#: RulerActivity.py:230
 msgid "Rulers"
 msgstr "Reglas"
