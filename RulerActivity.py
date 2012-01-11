@@ -107,8 +107,8 @@ class RulerActivity(activity.Activity):
         self.callback_dict = {}
         self._ready = False
 
-        _font = 'helvetica 12'
-        _font_bold = 'helvetica bold 12'
+        font = 'helvetica 12'
+        font_bold = 'helvetica bold 12'
 
         #
         # We need a canvas
@@ -117,12 +117,15 @@ class RulerActivity(activity.Activity):
         self.set_canvas(self._canvas)
         self._canvas.show()
 
-        _width = gtk.gdk.screen_width()
-        _height = gtk.gdk.screen_height() - GRID_CELL_SIZE
+        width = gtk.gdk.screen_width()
+        height = gtk.gdk.screen_height() - GRID_CELL_SIZE
 
         # Read the dpi from the Journal
         if get_hardware()[0:2] == 'xo':
-            self._canvas.set_dpi(200)  # OLPC XO
+            if width == 1024:
+                self._canvas.set_dpi(160)  # OLPC XO 3.0
+            else:
+                self._canvas.set_dpi(200)  # other OLPC XO
             self.known_dpi = True
         else:
             self.known_dpi = False
@@ -134,16 +137,12 @@ class RulerActivity(activity.Activity):
                 self._canvas.set_dpi(96)  # Just a guess
 
         # Create instances of our graphics
-        self._r = show_rulers.ScreenOfRulers(_font, _font_bold, _width,
-                                             _height)
-        self._gcm = show_grids.ScreenGrid_cm(_font, _font_bold, _width,
-                                             _height)
-        self._gmm = show_grids.ScreenGrid_mm(_font, _font_bold, _width,
-                                             _height)
-        self._a90 = show_angles.Angles90(_font, _font_bold, _width, _height)
-        self._a360 = show_angles.Angles360(_font, _font_bold, _width, _height)
-        self._c = show_checkers.ScreenOfCircles(_font, _font_bold, _width,
-                                                _height)
+        self._r = show_rulers.ScreenOfRulers(font, font_bold, width, height)
+        self._gcm = show_grids.ScreenGrid_cm(font, font_bold, width, height)
+        self._gmm = show_grids.ScreenGrid_mm(font, font_bold, width, height)
+        self._a90 = show_angles.Angles90(font, font_bold, width, height)
+        self._a360 = show_angles.Angles360(font, font_bold, width, height)
+        self._c = show_checkers.ScreenOfCircles(font, font_bold, width, height)
 
         # start with a ruler
         self._current = self._r
