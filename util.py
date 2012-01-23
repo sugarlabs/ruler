@@ -22,7 +22,10 @@ import gtk
 import gobject
 
 import dbus
+
 import os
+import commands
+from string import find
 
 import pango
 import pangocairo
@@ -74,34 +77,23 @@ def dimensions_mm(dpi, w, h):
     """ Return screen width, height in units mm """
     return int(w * 25.40 / dpi), int(h * 25.40 / dpi)
 
-"""
+
 def calc_dpmm():
     return 1.0*gtk.gdk.screen_width()/gtk.gdk.screen_width_mm()
 
-def calc_dpi():
-# will use xrdb query to get dpi
-# $ xdpyinfo
-# looking for something similar to "  resolution:    96x96 dots per inch"
 
-    cmd = "/usr/bin/xdpyinfo"
-    try:
-        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        xrdb_output = re.split("\n",proc.communicate()[0])
-        for i in xrdb_output:
-            if i != "":
-                a = re.split(":",i)
-                if a[0] == '  resolution':
-                    for b in re.split("\s",a[1]):
-                        if b != "":
-                            c = re.split("x",b)
-                            if len(c) > 1:
-                                print "looking up dpi: " + c[0]
-                                return(int(c[0]))
-    except:
+def calc_dpi():
+    '''Looking for 'dimensions' line in xdpyinfo
+       dimensions:    1280x800 pixels (339x212 millimeters)'''
+    (status, output) = commands.getstatusoutput('/usr/bin/xdpyinfo')
+    if status == 0:
+        strings = output[find(output, 'dimensions:'):].split()
+        w = int(strings[1].split('x')[0]) # e.g., 1280x800
+        mm = int(strings[3][1:].split('x')[0])  # e.g., (339x212)
+        return int(w * 25.4 / w)
+    else:
         # just in case the above fails
-        print "defaulting to 96 dpi"
-        return(96)
-"""
+        return 96
 
 #
 # Cairo-related utilities
