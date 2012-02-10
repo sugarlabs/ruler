@@ -55,7 +55,7 @@ _logger = logging.getLogger("ruler-activity")
 
 from gettext import gettext as _
 
-from util import get_hardware
+from util import get_hardware, calc_dpi
 import show_rulers
 import show_grids
 import show_checkers
@@ -70,7 +70,7 @@ class MyCanvas(gtk.DrawingArea):
         self._draw_ruler = False
         self._object = None
         self.connect('expose-event', self.__expose_event_cb)
-        self.dpi = 200
+        self._dpi = 96
 
     def __expose_event_cb(self, drawing_area, event):
         cr = self.window.cairo_create()
@@ -120,21 +120,8 @@ class RulerActivity(activity.Activity):
         width = gtk.gdk.screen_width()
         height = gtk.gdk.screen_height() - GRID_CELL_SIZE
 
-        # Read the dpi from the Journal
-        if get_hardware()[0:2] == 'xo':
-            if width == 1024:
-                self._canvas.set_dpi(160)  # OLPC XO 3.0
-            else:
-                self._canvas.set_dpi(200)  # other OLPC XO
-            self.known_dpi = True
-        else:
-            self.known_dpi = False
-            try:
-                dpi = self.metadata['dpi']
-                _logger.debug("Read dpi: " + str(dpi))
-                self._canvas.set_dpi(int(dpi))
-            except KeyError:
-                self._canvas.set_dpi(96)  # Just a guess
+        dpi, self.known_dpi = calc_dpi()
+        self._canvas.set_dpi(dpi)
 
         # Create instances of our graphics
         self._r = show_rulers.ScreenOfRulers(font, font_bold, width, height)
@@ -194,10 +181,10 @@ class RulerActivity(activity.Activity):
             toolbar_box.toolbar.insert(self.checker, -1)
 
             if not self.known_dpi:
+                print self.known_dpi
                 separator = gtk.SeparatorToolItem()
                 separator.show()
                 toolbar_box.toolbar.insert(separator, -1)
-
                 dpi = self._canvas.get_dpi()
                 self._dpi_spin_adj = gtk.Adjustment(dpi, 72, 200, 2, 32, 0)
                 self._dpi_spin = gtk.SpinButton(self._dpi_spin_adj, 0, 0)

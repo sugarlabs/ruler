@@ -78,10 +78,6 @@ def dimensions_mm(dpi, w, h):
     return int(w * 25.40 / dpi), int(h * 25.40 / dpi)
 
 
-def calc_dpmm():
-    return 1.0*gtk.gdk.screen_width()/gtk.gdk.screen_width_mm()
-
-
 def calc_dpi():
     '''Looking for 'dimensions' line in xdpyinfo
        dimensions:    1280x800 pixels (339x212 millimeters)'''
@@ -90,10 +86,10 @@ def calc_dpi():
         strings = output[find(output, 'dimensions:'):].split()
         w = int(strings[1].split('x')[0]) # e.g., 1280x800
         mm = int(strings[3][1:].split('x')[0])  # e.g., (339x212)
-        return int(w * 25.4 / w)
+        return int((w * 25.4 / mm) + 0.5), True
     else:
         # just in case the above fails
-        return 96
+        return 96, False
 
 #
 # Cairo-related utilities
