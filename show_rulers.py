@@ -39,9 +39,10 @@ class ScreenOfRulers():
 
         self.draw_ruler_pair(c, dpi, mm(dpi, 20))
 
-        # only calculate offsets if on an OLPC XO-1, 1.5, 1.75
-        if self.hw[0:2] == 'xo' and dpi == 200:  # Not applicable to XO 3.0
-            offset_of_xo_side_from_screen = mm(dpi, -38.5) #XXX needs checking
+        # Only calculate offsets if on an OLPC XO-1, 1.5, 1.75
+        # Not applicable to XO 3.0
+        if self.hw[0:2] == 'xo' and dpi in [200, 201]:
+            offset_of_xo_side_from_screen = mm(dpi, -38.5)
             c.move_to(offset_of_xo_side_from_screen,  mm(dpi, 65))
             self.draw_cm_ruler(c, dpi, 180)
             
@@ -51,7 +52,7 @@ class ScreenOfRulers():
                   self.font, mm(dpi, 4))
             c.restore()
 
-            offset_of_molding_from_screen = mm(dpi, -0.4) #XXX +- 0.2 ??
+            offset_of_molding_from_screen = mm(dpi, -0.4)
             c.move_to(offset_of_molding_from_screen,  mm(dpi, 95))
             self.draw_cm_ruler(c, dpi, 150)
 
@@ -61,7 +62,6 @@ class ScreenOfRulers():
             self.draw_cm_ruler(c, dpi, int(nw / 10 * 10))
             
     def draw_ruler_pair(self, c, dpi, y):
-
         c.move_to(mm(dpi, 10), y)
         self.connect_rulers(c, dpi)
 
@@ -90,7 +90,6 @@ class ScreenOfRulers():
         c.restore()
 
     def draw_cm_ruler(self, c, dpi, width=130):
-
         c.save()
         c.set_line_cap(cairo.LINE_CAP_SQUARE)
         c.translate(*c.get_current_point())
@@ -114,7 +113,6 @@ class ScreenOfRulers():
         c.restore()
 
     def draw_mm_ruler(self, c, dpi, width=130):
-
         c.save()
         c.set_line_cap(cairo.LINE_CAP_SQUARE)
         c.translate(*c.get_current_point())

@@ -84,12 +84,13 @@ def calc_dpi():
     (status, output) = commands.getstatusoutput('/usr/bin/xdpyinfo')
     if status == 0:
         strings = output[find(output, 'dimensions:'):].split()
-        w = int(strings[1].split('x')[0]) # e.g., 1280x800
+        w = int(strings[1].split('x')[0])  # e.g., 1280x800
         mm = int(strings[3][1:].split('x')[0])  # e.g., (339x212)
         return int((w * 25.4 / mm) + 0.5), True
     else:
         # just in case the above fails
         return 96, False
+
 
 #
 # Cairo-related utilities
@@ -113,8 +114,8 @@ def write(c, text, name, size, centered=False, at_top=False):
     font.set_size(int(round(size * pango.SCALE)))
     lo = pc.create_layout()
     lo.set_font_description(font)
-    lo.set_text("X")
-    extent = [x/pango.SCALE for x in lo.get_extents()[1]]
+    lo.set_text('X')
+    extent = [x / pango.SCALE for x in lo.get_extents()[1]]
     ex, ey = extent[2], extent[3]
     baseline_offset = -ey
     if not at_top:
@@ -123,7 +124,7 @@ def write(c, text, name, size, centered=False, at_top=False):
     lo = pc.create_layout()
     lo.set_font_description(font)
     lo.set_text(text)
-    extent =[x/pango.SCALE for x in lo.get_extents()[1]]
+    extent = [x / pango.SCALE for x in lo.get_extents()[1]]
     ex, ey = extent[2], extent[3]
     if centered:
         c.rel_move_to(-ex / 2, 0)

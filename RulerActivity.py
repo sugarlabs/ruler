@@ -55,7 +55,7 @@ _logger = logging.getLogger("ruler-activity")
 
 from gettext import gettext as _
 
-from util import get_hardware, calc_dpi
+from util import calc_dpi
 import show_rulers
 import show_grids
 import show_checkers
