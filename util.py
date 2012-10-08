@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Ruler.  If not, see <http://www.gnu.org/licenses/>
 
-import pygtk
-pygtk.require('2.0')
-import gtk
-import gobject
+import gi
+from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import GObject
 
 import dbus
 
@@ -27,8 +27,8 @@ import os
 import commands
 from string import find
 
-import pango
-import pangocairo
+from gi.repository import Pango
+from gi.repository import PangoCairo
 
 XO1 = 'xo1'
 XO15 = 'xo1.5'
@@ -98,38 +98,41 @@ def calc_dpi():
 def set_background_color(c, w, h):
     c.save()
     c.rectangle(0, 0, w, h)
-    c.set_source_color(gtk.gdk.color_parse('white'))
+    Gdk.cairo_set_source_color(c, Gdk.color_parse('white'))
     c.fill()
     c.restore()
 
 
 def set_color(c, name):
-    c.set_source_color(gtk.gdk.color_parse(name))
+    Gdk.cairo_set_source_color(c, Gdk.color_parse(name))
 
 
 def write(c, text, name, size, centered=False, at_top=False):
-    pc = pangocairo.CairoContext(c)
+    pc = PangoCairo.create_context(c)
 
-    font = pango.FontDescription(name)
-    font.set_size(int(round(size * pango.SCALE)))
-    lo = pc.create_layout()
+    font = Pango.FontDescription(name)
+    font.set_size(int(round(size * Pango.SCALE)))
+    lo = PangoCairo.create_layout(pc)
     lo.set_font_description(font)
-    lo.set_text('X')
-    extent = [x / pango.SCALE for x in lo.get_extents()[1]]
-    ex, ey = extent[2], extent[3]
-    baseline_offset = -ey
+    lo.set_text('X', -1)
+    baseline_offset = lo.get_baseline() / Pango.SCALE
     if not at_top:
-        c.rel_move_to(0, baseline_offset)
+        c.rel_move_to(0, -baseline_offset)
 
-    lo = pc.create_layout()
     lo.set_font_description(font)
-    lo.set_text(text)
-    extent = [x / pango.SCALE for x in lo.get_extents()[1]]
-    ex, ey = extent[2], extent[3]
+    lo.set_text(text, -1)
+    if hasattr(lo, 'get_logical_extents'):
+        extents = lo.get_logical_extents()
+        ex = extents.get_width() / Pango.SCALE
+    else:
+        ex = size
+
     if centered:
         c.rel_move_to(-ex / 2, 0)
-    pc.show_layout(lo)
+    PangoCairo.update_layout(c, lo)
+    PangoCairo.show_layout(c, lo)
     c.rel_move_to(ex, 0)
 
     if not at_top:
         c.rel_move_to(0, -baseline_offset)
+        

@@ -16,36 +16,37 @@
 # You should have received a copy of the GNU General Public License
 # along with Ruler.  If not, see <http://www.gnu.org/licenses/>
 
-import pygtk
-pygtk.require('2.0')
-import gtk
-import gobject
+import gi
+from gi.repository import Gtk
+from gi.repository import GObject
+from gi.repository import GdkX11
 
 import cairo
 
 import os.path
 
-import sugar
-from sugar.activity import activity
+import sugar3
+from sugar3.activity import activity
+
 try:  # 0.86+ toolbar widgets
-    from sugar.graphics.toolbarbox import ToolbarBox
+    from sugar3.graphics.toolbarbox import ToolbarBox
     HAS_TOOLARBOX = True
 except ImportError:
     HAS_TOOLARBOX = False
 
 if HAS_TOOLARBOX:
-    from sugar.bundle.activitybundle import ActivityBundle
-    from sugar.activity.widgets import ActivityToolbarButton
-    from sugar.activity.widgets import StopButton
-    from sugar.graphics.toolbarbox import ToolbarButton
+    from sugar3.bundle.activitybundle import ActivityBundle
+    from sugar3.activity.widgets import ActivityToolbarButton
+    from sugar3.activity.widgets import StopButton
+    from sugar3.graphics.toolbarbox import ToolbarButton
 
-from sugar.graphics.radiotoolbutton import RadioToolButton
-from sugar.graphics.toolbutton import ToolButton
-from sugar.graphics.menuitem import MenuItem
-from sugar.graphics.icon import Icon
-from sugar.datastore import datastore
+from sugar3.graphics.radiotoolbutton import RadioToolButton
+from sugar3.graphics.toolbutton import ToolButton
+from sugar3.graphics.menuitem import MenuItem
+from sugar3.graphics.icon import Icon
+from sugar3.datastore import datastore
 try:
-    from sugar.graphics import style
+    from sugar3.graphics import style
     GRID_CELL_SIZE = style.GRID_CELL_SIZE
 except ImportError:
     GRID_CELL_SIZE = 0
@@ -61,26 +62,26 @@ import show_grids
 import show_checkers
 import show_angles
 
+from sugar3.graphics import style
 
-class MyCanvas(gtk.DrawingArea):
+class MyCanvas(Gtk.DrawingArea):
     ''' Create a GTK+ widget on which we will draw using Cairo '''
 
     def __init__(self):
-        gtk.DrawingArea.__init__(self)
+        
+        Gtk.DrawingArea.__init__(self)
+        
         self._draw_ruler = False
         self._object = None
-        self.connect('expose-event', self.__expose_event_cb)
+        self.connect('draw', self.__expose_event_cb)
         self._dpi = 96
 
     def __expose_event_cb(self, drawing_area, event):
-        cr = self.window.cairo_create()
+        cr = self.get_property('window').cairo_create()
 
         if self._draw_ruler:
             self._object.draw(cr, self._dpi)
-
-        # Restrict Cairo to the exposed area; avoid extra work
-        cr.rectangle(event.area.x, event.area.y,
-                     event.area.width, event.area.height)
+        
         cr.clip()
 
     def add_a_ruler(self, r):
@@ -117,8 +118,9 @@ class RulerActivity(activity.Activity):
         self.set_canvas(self._canvas)
         self._canvas.show()
 
-        width = gtk.gdk.screen_width()
-        height = gtk.gdk.screen_height() - GRID_CELL_SIZE
+        screen = GdkX11.X11Screen()
+        width = screen.width()
+        height = screen.height() - GRID_CELL_SIZE
 
         dpi, self.known_dpi = calc_dpi()
         self._canvas.set_dpi(dpi)
@@ -182,22 +184,22 @@ class RulerActivity(activity.Activity):
 
             if not self.known_dpi:
                 print self.known_dpi
-                separator = gtk.SeparatorToolItem()
+                separator = Gtk.SeparatorToolItem()
                 separator.show()
                 toolbar_box.toolbar.insert(separator, -1)
                 dpi = self._canvas.get_dpi()
-                self._dpi_spin_adj = gtk.Adjustment(dpi, 72, 200, 2, 32, 0)
-                self._dpi_spin = gtk.SpinButton(self._dpi_spin_adj, 0, 0)
+                self._dpi_spin_adj = Gtk.Adjustment(dpi, 72, 200, 2, 32, 0)
+                self._dpi_spin = Gtk.SpinButton(self._dpi_spin_adj, 0, 0)
                 self._dpi_spin_id = self._dpi_spin.connect('value-changed',
                                                            self._dpi_spin_cb)
                 self._dpi_spin.set_numeric(True)
                 self._dpi_spin.show()
-                self.tool_item_dpi = gtk.ToolItem()
+                self.tool_item_dpi = Gtk.ToolItem()
                 self.tool_item_dpi.add(self._dpi_spin)
                 toolbar_box.toolbar.insert(self.tool_item_dpi, -1)
                 self.tool_item_dpi.show()
 
-            separator = gtk.SeparatorToolItem()
+            separator = Gtk.SeparatorToolItem()
             separator.props.draw = False
             separator.set_expand(True)
             separator.show()
@@ -303,11 +305,13 @@ class RulerActivity(activity.Activity):
         self.metadata['dpi'] = str(dpi)
 
 
-class ProjectToolbar(gtk.Toolbar):
+class ProjectToolbar(Gtk.Toolbar):
     ''' Project toolbar for pre-0.86 toolbars '''
 
     def __init__(self, pc):
-        gtk.Toolbar.__init__(self)
+        
+        Gtk.Toolbar.__init__(self)
+        
         self.activity = pc
 
         # Ruler
@@ -343,21 +347,21 @@ class ProjectToolbar(gtk.Toolbar):
         self.activity.checker.show()
 
         if not self.activity.known_dpi:
-            separator = gtk.SeparatorToolItem()
+            separator = Gtk.SeparatorToolItem()
             separator.set_draw(True)
             self.insert(separator, -1)
             separator.show()
 
             dpi = self.activity._canvas.get_dpi()
-            self.activity._dpi_spin_adj = gtk.Adjustment(
+            self.activity._dpi_spin_adj = Gtk.Adjustment(
                 dpi, 72, 200, 2, 32, 0)
             self.activity._dpi_spin = \
-                gtk.SpinButton(self.activity._dpi_spin_adj, 0, 0)
+                Gtk.SpinButton(self.activity._dpi_spin_adj, 0, 0)
             self.activity._dpi_spin_id = self.activity._dpi_spin.connect(
                 'value-changed', self.activity._dpi_spin_cb)
             self.activity._dpi_spin.set_numeric(True)
             self.activity._dpi_spin.show()
-            self.activity.tool_item_dpi = gtk.ToolItem()
+            self.activity.tool_item_dpi = Gtk.ToolItem()
             self.activity.tool_item_dpi.add(self.activity._dpi_spin)
             self.insert(self.activity.tool_item_dpi, -1)
             self.activity.tool_item_dpi.show()
@@ -372,14 +376,15 @@ class MyButton(RadioToolButton):
         if icon_name == '':
             icon_name = 'computer-xo'
         icon = Icon(icon_name=icon_name,
-                    icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR)
+                    icon_size=style.GRID_CELL_SIZE)
         self.set_icon_widget(icon)
         icon.show()
         if tooltip is not None:
             self.set_tooltip(tooltip)
         self.props.sensitive = True
         self.connect('clicked', callback)
-        self.set_group(group)
+        # FIXME: Argument 1 does not allow None as a value
+        #self.set_group(group)
         self.show()
 
         parent.button_dict[name] = self
@@ -387,6 +392,6 @@ class MyButton(RadioToolButton):
 
     def set_icon(self, name):
         icon = Icon(icon_name=name,
-                    icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR)
+                    icon_size=style.GRID_CELL_SIZE)
         self.set_icon_widget(icon)
         icon.show()
