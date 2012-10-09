@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -9,55 +7,34 @@
    xmlns="http://www.w3.org/2000/svg"
    version="1.1"
    width="55"
-   height="55"
-   id="svg3099">
-  <metadata
-     id="metadata3113">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <defs
-     id="defs3111" />
+   height="55">
   <rect
-     width="53.013084"
-     height="53.013084"
-     x="0.99345779"
-     y="0.99345779"
-     id="rect2991"
+     width="55"
+     height="55"
+     x="0"
+     y="0"
      style="fill:#000000;fill-opacity:1;stroke:none" />
   <g
-     transform="translate(4.5,-5.5)"
-     id="g3140">
+     transform="translate(4.5,-5.5)">
     <rect
        width="20"
        height="40"
        x="13"
        y="13"
-       id="rect3101"
        style="fill:none;stroke:#ffffff;stroke-width:4" />
     <line
-       id="line3103"
        style="fill:none;stroke:#ffffff;stroke-width:4"
        x2="33"
        x1="25"
        y2="23"
        y1="23" />
     <line
-       id="line3105"
        style="fill:none;stroke:#ffffff;stroke-width:4"
        x2="33"
        x1="25"
        y2="33"
        y1="33" />
     <line
-       id="line3107"
        style="fill:none;stroke:#ffffff;stroke-width:4"
        x2="33"
        x1="25"
