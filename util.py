@@ -126,6 +126,7 @@ def write(c, text, name, size, centered=False, at_top=False):
         ex = extents.get_width() / Pango.SCALE
     else:
         ex = size
+        ex *= len(text)
 
     if centered:
         c.rel_move_to(-ex / 2, 0)
