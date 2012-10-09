@@ -160,7 +160,7 @@ class RulerActivity(activity.Activity):
                                     tooltip=_('Angles'),
                                     group=self.rulers)
 
-        self.angles = radio_factory('checker',
+        self.checker = radio_factory('checker',
                                     toolbar_box.toolbar,
                                     self._checker_cb,
                                     tooltip=_('Checker'),
