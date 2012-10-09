@@ -1,5 +1,6 @@
 # Copyright (c) 2007 Mitchell N. Charity
-# Copyright (c) 2009-2011 Walter Bender
+# Copyright (c) 2009-2012 Walter Bender
+# Copyright (c) 2012 Flavio Danesse
 #
 # This file is part of Ruler.
 #
