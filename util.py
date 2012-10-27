@@ -1,5 +1,5 @@
 # Copyright 2007 Mitchell N. Charity
-# Copyright 2009 Walter Bender
+# Copyright 2009, 2012 Walter Bender
 #
 # This file is part of Ruler.
 #
@@ -24,7 +24,7 @@ import gobject
 import dbus
 
 import os
-import commands
+import subprocess
 from string import find
 
 import pango
@@ -81,14 +81,13 @@ def dimensions_mm(dpi, w, h):
 def calc_dpi():
     '''Looking for 'dimensions' line in xdpyinfo
        dimensions:    1280x800 pixels (339x212 millimeters)'''
-    (status, output) = commands.getstatusoutput('/usr/bin/xdpyinfo')
-    if status == 0:
+    output = check_output('/usr/bin/xdpyinfo', 'xdpyinfo failed')
+    if output is not None:
         strings = output[find(output, 'dimensions:'):].split()
         w = int(strings[1].split('x')[0])  # e.g., 1280x800
         mm = int(strings[3][1:].split('x')[0])  # e.g., (339x212)
         return int((w * 25.4 / mm) + 0.5), True
     else:
-        # just in case the above fails
         return 96, False
 
 
@@ -133,3 +132,25 @@ def write(c, text, name, size, centered=False, at_top=False):
 
     if not at_top:
         c.rel_move_to(0, -baseline_offset)
+
+
+def check_output(command, warning):
+    ''' Workaround for old systems without subprocess.check_output'''
+    if hasattr(subprocess, 'check_output'):
+        try:
+            output = subprocess.check_output(command)
+        except subprocess.CalledProcessError:
+            log.warning(warning)
+            return None
+    else:
+        import commands
+
+        cmd = ''
+        for c in command:
+            cmd += c
+            cmd += ' '
+        (status, output) = commands.getstatusoutput(cmd)
+        if status != 0:
+            log.warning(warning)
+            return None
+    return output
