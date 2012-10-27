@@ -2,41 +2,41 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-23 16:56-0400\n"
-"PO-Revision-Date: 2012-09-21 22:38+0200\n"
-"Last-Translator: hariru <hariruroa@gmail.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"X-Generator: Translate Toolkit 1.7.0\n"
 
 #: activity/activity.info:2 RulerActivity.py:162 RulerActivity.py:298
 msgid "Ruler"
-msgstr "Rūri"
+msgstr ""
 
 #: show_rulers.py:50
 msgid "Use this ruler from the outside edge of the computer."
-msgstr "Whakamahia tēnei rūri mai i waho o te tapanga o te rorohiko."
+msgstr ""
 
 #: RulerActivity.py:170 RulerActivity.py:306
 msgid "Grid"
-msgstr "Mātiti"
+msgstr ""
 
 #: RulerActivity.py:178 RulerActivity.py:314
 msgid "Angles"
-msgstr "Ngā Koki"
+msgstr ""
 
 #: RulerActivity.py:186 RulerActivity.py:322
 msgid "Checker"
-msgstr "Kaitaki"
+msgstr ""
 
 #: RulerActivity.py:230
 msgid "Rulers"
-msgstr "Ngā Rūri"
+msgstr ""
