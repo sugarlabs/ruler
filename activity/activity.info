@@ -3,6 +3,11 @@ name = Ruler
 bundle_id = com.laptop.Ruler
 exec = sugar-activity RulerActivity.RulerActivity
 icon = activity-ruler
+<<<<<<< HEAD
 activity_version = 20
+=======
+activity_version = 21
+>>>>>>> c1ae3b7b6eedf94357961f25ad764802154ac360
 show_launcher = yes
 license = GPLv3+
+summary = scaled images of a ruler, protractor, and a checker board
