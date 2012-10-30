@@ -1,3 +1,7 @@
+23
+
+* Remove dependency on xpdyinfo
+
 21
 
 * GTK-3 conversion by Flavio Danesse
