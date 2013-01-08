@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-23 16:56-0400\n"
+"POT-Creation-Date: 2013-01-08 20:34+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,26 +17,35 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: activity/activity.info:2 RulerActivity.py:162 RulerActivity.py:298
+#: activity/activity.info:2 RulerActivity.py:150
 msgid "Ruler"
 msgstr ""
 
-#: show_rulers.py:50
-msgid "Use this ruler from the outside edge of the computer."
+#: activity/activity.info:3
+msgid "scaled images of a ruler, protractor, and a checker board"
 msgstr ""
 
-#: RulerActivity.py:170 RulerActivity.py:306
+#: RulerActivity.py:156
 msgid "Grid"
 msgstr ""
 
-#: RulerActivity.py:178 RulerActivity.py:314
+#: RulerActivity.py:162
 msgid "Angles"
 msgstr ""
 
-#: RulerActivity.py:186 RulerActivity.py:322
+#: RulerActivity.py:168
 msgid "Checker"
 msgstr ""
 
-#: RulerActivity.py:230
-msgid "Rulers"
+#: RulerActivity.py:176
+msgid "1 custom unit equals "
+msgstr ""
+
+#. TRANS: mm is for Milli Meters
+#: RulerActivity.py:179
+msgid " mm."
+msgstr ""
+
+#: show_rulers.py:58
+msgid "Use this ruler from the outside edge of the computer."
 msgstr ""
