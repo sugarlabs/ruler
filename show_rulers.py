@@ -117,7 +117,7 @@ class ScreenOfRulers():
         self.c.set_line_width(5)
         self.c.move_to(0, 0)
         self.c.line_to(mm(self.dpi, width), 0)
-        for x in [mm(self.dpi, xm / 100) for xm in xrange(
+        for x in [mm(self.dpi, xm / 100.) for xm in xrange(
                 0, (width + 1) * 100, int(units_per_mm * 100))]:
             self.c.move_to(x, 0)
             self.c.rel_line_to(0, mm(self.dpi, -3))
