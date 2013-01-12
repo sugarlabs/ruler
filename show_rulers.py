@@ -117,21 +117,22 @@ class ScreenOfRulers():
         self.c.set_line_width(5)
         self.c.move_to(0, 0)
         self.c.line_to(mm(self.dpi, width), 0)
-        for x in [mm(self.dpi, xm / 100) for xm in xrange(0, (width+1) * 100,
-                                                     int(units_per_mm * 100))]:
+        for x in [mm(self.dpi, xm / 100) for xm in xrange(
+                0, (width + 1) * 100, int(units_per_mm * 100))]:
             self.c.move_to(x, 0)
             self.c.rel_line_to(0, mm(self.dpi, -3))
         self.c.stroke()
         pt_list = [x / int(units_per_mm * 100) for x in \
                    range(0, (width + 1) * 100, int(units_per_mm * 100))]
-        coord_list = [mm(self.dpi, xm / 100) for xm in range(0, (width + 1) * 100,
-                                                      int(units_per_mm * 100))]
+        coord_list = [mm(self.dpi, xm / 100) for xm in range(
+                0, (width + 1) * 100, int(units_per_mm * 100))]
         for a in range(0, len(coord_list)):
             xm = pt_list[a]
             x = coord_list[a]
             n = xm
             self.c.move_to(x, mm(self.dpi, -4))
-            write(self.c, "%d" % n, self.font_bold, mm(self.dpi, 2.5), centered=True)
+            write(self.c, "%d" % n, self.font_bold, mm(self.dpi, 2.5),
+                  centered=True)
 
         self.c.move_to(mm(self.dpi, 1.5), mm(self.dpi, -4))
         write(self.c, "unit", self.font_bold, mm(self.dpi, 2))
