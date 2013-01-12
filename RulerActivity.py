@@ -53,7 +53,8 @@ import show_grids
 import show_checkers
 import show_angles
 
-from sugar3.graphics import style
+MMPERINCH = 25.4
+
 
 class MyCanvas(Gtk.DrawingArea):
     ''' Create a GTK+ widget on which we will draw using Cairo '''
@@ -263,15 +264,17 @@ class RulerActivity(activity.Activity):
     def custom_unit_change_cb(self, widget):
         try:
             new = float(widget.get_text())
-            if new > 7: # less than 7 results in overlapping.
-                self._canvas.add_a_ruler(self._r)
-                self._r.custom_unit_in_mm = new
-                self._r.draw_custom_ruler(self._r.custom_unit_in_mm)
-                self.metadata['custom_unit'] = new
         except ValueError:
-            if widget.get_text() != '':
-                widget.set_text('25.4')
-                self.metadata['custom_unit'] = 25.4
+            new = MMPERINCH
+        new = abs(new)
+        if new == 0:
+            new = MMPERINCH
+            if widget.get_text != '':
+                widget.set_text(str(new))
+        self._canvas.add_a_ruler(self._r)
+        self._r.custom_unit_in_mm = new
+        self._r.draw_custom_ruler(self._r.custom_unit_in_mm)
+        self.metadata['custom_unit'] = new
 
     def _grids_cb(self, button=None):
         if self._ready:

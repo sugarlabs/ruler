@@ -126,16 +126,15 @@ class ScreenOfRulers():
                    range(0, (width + 1) * 100, int(units_per_mm * 100))]
         coord_list = [mm(self.dpi, xm / 100) for xm in range(
                 0, (width + 1) * 100, int(units_per_mm * 100))]
-        for a in range(0, len(coord_list)):
-            xm = pt_list[a]
-            x = coord_list[a]
-            n = xm
-            self.c.move_to(x, mm(self.dpi, -4))
-            write(self.c, "%d" % n, self.font_bold, mm(self.dpi, 2.5),
-                  centered=True)
 
-        self.c.move_to(mm(self.dpi, 1.5), mm(self.dpi, -4))
-        write(self.c, "unit", self.font_bold, mm(self.dpi, 2))
+        if units_per_mm > 7:  # Avoid overlapping labels
+            for a in range(0, len(coord_list)):
+                xm = pt_list[a]
+                x = coord_list[a]
+                n = xm
+                self.c.move_to(x, mm(self.dpi, -4))
+                write(self.c, "%d" % n, self.font_bold, mm(self.dpi, 2.5),
+                      centered=True)
 
         self.c.restore()
 
