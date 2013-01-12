@@ -279,6 +279,7 @@ class RulerActivity(activity.Activity):
     def _grids_cb(self, button=None):
         if self._ready:
             self.custom_units_button.set_sensitive(False)
+            self.custom_units_button.set_expanded(False)
             if self._grids_mode == "cm":
                 self._current = self._gcm
                 if hasattr(self, 'grids'):
@@ -297,6 +298,7 @@ class RulerActivity(activity.Activity):
     def _angles_cb(self, button=None):
         if self._ready:
             self.custom_units_button.set_sensitive(False)
+            self.custom_units_button.set_expanded(False)
             if self._angles_mode == "90":
                 self._current = self._a90
                 if hasattr(self, 'angles'):
@@ -315,6 +317,7 @@ class RulerActivity(activity.Activity):
     def _checker_cb(self, button=None):
         if self._ready:
             self.custom_units_button.set_sensitive(False)
+            self.custom_units_button.set_expanded(False)
             self._current = self._c
             self._canvas.add_a_ruler(self._current)
             _logger.debug('selecting checker')
