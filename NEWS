@@ -1,3 +1,15 @@
+29
+
+* New translations
+
+27
+
+* Fix issues with custom units ruler as per #4376
+
+25
+
+* Add a custom units ruler. (Aneesh Dogra)
+
 23
 
 * Remove dependency on xpdyinfo

@@ -1,6 +1,7 @@
 # Copyright (c) 2007 Mitchell N. Charity
 # Copyright (c) 2009-2012 Walter Bender
 # Copyright (c) 2012 Flavio Danesse
+# Copyright (c) 2013 Aneesh Dogra <lionaneesh@gmail.com>
 #
 # This file is part of Ruler.
 #
@@ -52,7 +53,8 @@ import show_grids
 import show_checkers
 import show_angles
 
-from sugar3.graphics import style
+MMPERINCH = 25.4
+
 
 class MyCanvas(Gtk.DrawingArea):
     ''' Create a GTK+ widget on which we will draw using Cairo '''
@@ -167,6 +169,37 @@ class RulerActivity(activity.Activity):
                                     tooltip=_('Checker'),
                                     group=self.rulers)
 
+        self.wrapper = Gtk.ToolItem()
+        self.wrapper2 = Gtk.ToolItem()
+        self.wrapper3 = Gtk.ToolItem()
+        self.custom_unit_entry = Gtk.Entry()
+        self.txt1 = Gtk.Label()
+        self.txt1.set_text(_('1 custom unit equals '))
+        self.txt2 = Gtk.Label()
+        # TRANS: mm is for Milli Meters
+        self.txt2.set_text(_(' mm.'))
+        self.wrapper.add(self.txt1)
+        self.wrapper2.add(self.custom_unit_entry)
+        self.wrapper3.add(self.txt2)
+        self.wrapper.show_all()
+        self.wrapper2.show_all()
+        self.wrapper3.show_all()
+        separator = Gtk.SeparatorToolItem()
+        separator.props.draw = True
+        separator.set_expand(False)
+        separator.show()
+        toolbar_box.toolbar.insert(separator, -1)
+        custom_units_toolbox = ToolbarBox()
+        custom_units_toolbox.toolbar.insert(self.wrapper, -1)
+        custom_units_toolbox.toolbar.insert(self.wrapper2, -1)
+        custom_units_toolbox.toolbar.insert(self.wrapper3, -1)
+        custom_units_toolbox.show()
+        self.custom_units_button = ToolbarButton(icon_name='view-source',
+                                                 page=custom_units_toolbox)
+        toolbar_box.toolbar.insert(self.custom_units_button, -1)
+        self.custom_unit_entry.connect('changed', self.custom_unit_change_cb)
+        self.custom_units_button.show()
+
         if not self.known_dpi:
             separator = Gtk.SeparatorToolItem()
             separator.show()
@@ -211,19 +244,42 @@ class RulerActivity(activity.Activity):
             self._rulers_cb()
             self.rulers.set_active(True)
 
+        if 'custom_unit' in self.metadata:
+            self.custom_unit_entry.set_text(str(self.metadata['custom_unit']))
+        else: # set the default
+            self.custom_unit_entry.set_text("25.4")
+
     #
     # Button callbacks
     #
     def _rulers_cb(self, button=None):
         if self._ready:
+            self.custom_units_button.set_sensitive(True)
             self._current = self._r
             self._canvas.add_a_ruler(self._current)
             _logger.debug('selecting ruler')
             self.metadata['ruler'] = 'ruler'
         return False
 
+    def custom_unit_change_cb(self, widget):
+        try:
+            new = float(widget.get_text())
+        except ValueError:
+            new = MMPERINCH
+        new = abs(new)
+        if new == 0:
+            new = MMPERINCH
+            if widget.get_text != '':
+                widget.set_text(str(new))
+        self._canvas.add_a_ruler(self._r)
+        self._r.custom_unit_in_mm = new
+        self._r.draw_custom_ruler(self._r.custom_unit_in_mm)
+        self.metadata['custom_unit'] = new
+
     def _grids_cb(self, button=None):
         if self._ready:
+            self.custom_units_button.set_sensitive(False)
+            self.custom_units_button.set_expanded(False)
             if self._grids_mode == "cm":
                 self._current = self._gcm
                 if hasattr(self, 'grids'):
@@ -241,6 +297,8 @@ class RulerActivity(activity.Activity):
 
     def _angles_cb(self, button=None):
         if self._ready:
+            self.custom_units_button.set_sensitive(False)
+            self.custom_units_button.set_expanded(False)
             if self._angles_mode == "90":
                 self._current = self._a90
                 if hasattr(self, 'angles'):
@@ -258,6 +316,8 @@ class RulerActivity(activity.Activity):
 
     def _checker_cb(self, button=None):
         if self._ready:
+            self.custom_units_button.set_sensitive(False)
+            self.custom_units_button.set_expanded(False)
             self._current = self._c
             self._canvas.add_a_ruler(self._current)
             _logger.debug('selecting checker')
