@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-28 00:33-0400\n"
-"PO-Revision-Date: 2012-10-28 14:37+0200\n"
+"POT-Creation-Date: 2013-05-25 00:33-0400\n"
+"PO-Revision-Date: 2013-05-26 14:45+0200\n"
 "Last-Translator: AlanJAS <alanjas@hotmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Pootle 2.0.5\n"
 
 #. TRANS: "name" option from activity.info file
-#: RulerActivity.py:149
+#: RulerActivity.py:151
 msgid "Ruler"
 msgstr "Regla"
 
@@ -27,19 +27,28 @@ msgstr "Regla"
 msgid "scaled images of a ruler, protractor, and a checker board"
 msgstr "imágenes a escala de una regla, transportador, y un tablero de ajedrez"
 
-#: RulerActivity.py:155
+#: RulerActivity.py:157
 msgid "Grid"
 msgstr "Cuadrícula"
 
-#: RulerActivity.py:161
+#: RulerActivity.py:163
 msgid "Angles"
 msgstr "Ángulos"
 
-#: RulerActivity.py:167
+#: RulerActivity.py:169
 msgid "Checker"
 msgstr "Tablero"
 
-#: show_rulers.py:51
+#: RulerActivity.py:177
+msgid "1 custom unit equals "
+msgstr "1 unidad de medida igual a "
+
+#. TRANS: mm is for Milli Meters
+#: RulerActivity.py:180
+msgid " mm."
+msgstr " mm."
+
+#: show_rulers.py:58
 msgid "Use this ruler from the outside edge of the computer."
 msgstr "Usa esta regla desde el borde de la computadora."
 
