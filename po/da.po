@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-28 00:33-0400\n"
+"POT-Creation-Date: 2013-05-25 00:33-0400\n"
 "PO-Revision-Date: 2012-10-28 19:03+0200\n"
 "Last-Translator: Aputsiaq Niels <aj@isit.gl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Pootle 2.0.5\n"
 
 #. TRANS: "name" option from activity.info file
-#: RulerActivity.py:149
+#: RulerActivity.py:151
 msgid "Ruler"
 msgstr "Lineal"
 
@@ -27,19 +27,28 @@ msgstr "Lineal"
 msgid "scaled images of a ruler, protractor, and a checker board"
 msgstr "skalerede billeder af en lineal, en vinkelmåler og et skakbræt"
 
-#: RulerActivity.py:155
+#: RulerActivity.py:157
 msgid "Grid"
 msgstr "Gitter"
 
-#: RulerActivity.py:161
+#: RulerActivity.py:163
 msgid "Angles"
 msgstr "Vinkler"
 
-#: RulerActivity.py:167
+#: RulerActivity.py:169
 msgid "Checker"
 msgstr "Kontrollør"
 
-#: show_rulers.py:51
+#: RulerActivity.py:177
+msgid "1 custom unit equals "
+msgstr ""
+
+#. TRANS: mm is for Milli Meters
+#: RulerActivity.py:180
+msgid " mm."
+msgstr ""
+
+#: show_rulers.py:58
 msgid "Use this ruler from the outside edge of the computer."
 msgstr "Brug denne lineal fra den yderste kant af computeren."
 
