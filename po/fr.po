@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 00:33-0400\n"
-"PO-Revision-Date: 2012-11-24 17:29+0200\n"
-"Last-Translator: Lionel Laské <llaske@c2s.fr>\n"
+"PO-Revision-Date: 2013-08-10 19:53+0200\n"
+"Last-Translator: samy boutayeb <s.boutayeb@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -41,12 +41,12 @@ msgstr "Damier"
 
 #: RulerActivity.py:177
 msgid "1 custom unit equals "
-msgstr ""
+msgstr "1 unité personnalisée égale"
 
 #. TRANS: mm is for Milli Meters
 #: RulerActivity.py:180
 msgid " mm."
-msgstr ""
+msgstr " mm."
 
 #: show_rulers.py:58
 msgid "Use this ruler from the outside edge of the computer."
