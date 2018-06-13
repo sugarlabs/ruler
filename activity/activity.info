@@ -8,4 +8,6 @@ show_launcher = yes
 license = GPLv3+
 single_instance = yes
 summary = scaled images of a ruler, protractor, and a checker board
-category = science maths
+tags = science; maths
+url = https://help.sugarlabs.org/en/ruler.html
+repository = https://github.com/sugarlabs/ruler
