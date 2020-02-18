@@ -9,13 +9,13 @@ Ruler is a simple collection of measurement tools that are displayed on the scre
 
 * [How to Get Sugar](https://sugarlabs.org/)
 * [How to use Sugar](https://help.sugarlabs.org/)
-* [How to use Ruler](https://help.sugarlabs.org/en/ruler.html)
+* [How to use Ruler](https://help.sugarlabs.org/ruler.html)
 
 ## How to upgrade?
 
 On Sugar desktop systems;
 
-* Use [My Settings](https://help.sugarlabs.org/en/my_settings.html), [Software Update](https://help.sugarlabs.org/en/my_settings.html#software-update), or;
+* Use [My Settings](https://help.sugarlabs.org/my_settings.html), [Software Update](https://help.sugarlabs.org/my_settings.html#software-update), or;
 * Use Browse to open [activities.sugarlabs.org](https://activities.sugarlabs.org/), search for `Ruler` and click `Download Now`.
 
 ## Request a new feature
