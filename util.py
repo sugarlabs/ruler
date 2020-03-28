@@ -100,11 +100,10 @@ def set_color(c, name):
 
 
 def write(c, text, name, size, centered=False, at_top=False):
-    pc = PangoCairo.create_context(c)
 
     font = Pango.FontDescription(name)
     font.set_size(int(round(size * Pango.SCALE)))
-    lo = PangoCairo.create_layout(pc)
+    lo = PangoCairo.create_layout(c)
     lo.set_font_description(font)
     lo.set_text('X', -1)
     baseline_offset = lo.get_baseline() / Pango.SCALE
