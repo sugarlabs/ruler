@@ -65,11 +65,11 @@ class MyCanvas(Gtk.DrawingArea):
         
         self._draw_ruler = False
         self._object = None
-        self.connect('draw', self.__expose_event_cb)
+        self.connect('draw', self.__draw_cb)
         self._dpi = 96
 
-    def __expose_event_cb(self, drawing_area, event):
-        cr = self.get_property('window').cairo_create()
+    def __draw_cb(self,widget, cr):
+
 
         if self._draw_ruler:
             self._object.draw(cr, self._dpi)
@@ -274,7 +274,7 @@ class RulerActivity(activity.Activity):
         self._canvas.add_a_ruler(self._r)
         self._r.custom_unit_in_mm = new
         self._r.draw_custom_ruler(self._r.custom_unit_in_mm)
-        self.metadata['custom_unit'] = new
+        self.metadata['custom_unit'] = str(new)
 
     def _grids_cb(self, button=None):
         if self._ready:
