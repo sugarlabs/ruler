@@ -244,7 +244,7 @@ class RulerActivity(activity.Activity):
             self.rulers.set_active(True)
 
         if 'custom_unit' in self.metadata:
-            self.custom_unit_entry.set_text(str(self.metadata['custom_unit']))
+            self.custom_unit_entry.set_text(self.metadata['custom_unit'])
         else: # set the default
             self.custom_unit_entry.set_text("25.4")
 
