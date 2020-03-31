@@ -68,8 +68,7 @@ class MyCanvas(Gtk.DrawingArea):
         self.connect('draw', self.__draw_cb)
         self._dpi = 96
 
-    def __draw_cb(self,widget, cr):
-
+    def __draw_cb(self, widget, cr):
 
         if self._draw_ruler:
             self._object.draw(cr, self._dpi)
