@@ -21,7 +21,7 @@
 import gi
 from gi.repository import Gtk
 from gi.repository import GObject
-from gi.repository import GdkX11
+from gi.repository import Gdk
 
 import cairo
 
@@ -110,7 +110,7 @@ class RulerActivity(activity.Activity):
         self.set_canvas(self._canvas)
         self._canvas.show()
 
-        screen = GdkX11.X11Screen()
+        screen = Gdk.Screen()
         width = screen.width()
         height = screen.height() - GRID_CELL_SIZE
 
