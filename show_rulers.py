@@ -65,11 +65,10 @@ class ScreenOfRulers():
             self.draw_custom_ruler(self.custom_unit_in_mm, int(nw / 10 * 10))
 
         else:
-            l = int( nw / 20 )
-            self.offset_of_xo_side_from_screen = mm(dpi, l)
+            self.offset_of_xo_side_from_screen = mm(dpi, int(nw / 20))
             c.move_to(self.offset_of_xo_side_from_screen,  mm(dpi, 65))
-            self.draw_cm_ruler(c, dpi, int((nw / 10 * 10) - l))
-            self.draw_custom_ruler(self.custom_unit_in_mm, int((nw / 10 * 10) - l))
+            self.draw_cm_ruler(c, dpi, int(nw / 11 * 10))
+            self.draw_custom_ruler(self.custom_unit_in_mm, int(nw / 11 * 10))
             
     def draw_ruler_pair(self, c, dpi, y):
         c.move_to(mm(dpi, 10), y)
