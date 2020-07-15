@@ -17,12 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Ruler.  If not, see <http://www.gnu.org/licenses/>
 
+from gettext import gettext as _
+
 import cairo
 
 from util import mm, dimensions_mm, set_background_color, write, get_hardware
 
-import os.path
-from gettext import gettext as _
 
 class ScreenOfRulers():
     def __init__(self, font, font_bold, w, h):

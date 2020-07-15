@@ -17,17 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Ruler.  If not, see <http://www.gnu.org/licenses/>
 
-import gi
-from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import GObject
-
-import dbus
-
 import os
-import subprocess
-from string import find
 
+from gi.repository import Gdk
+from gi.repository import Gtk
 from gi.repository import Pango
 from gi.repository import PangoCairo
 
