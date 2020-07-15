@@ -18,8 +18,6 @@
 
 import cairo
 
-from math import pi
-
 from util import mm, dimensions_mm, set_background_color
 
 

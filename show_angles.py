@@ -16,14 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Ruler.  If not, see <http://www.gnu.org/licenses/>
 
-import cairo
-
 from math import pi, sin, cos
 
-from util import mm, dimensions_mm, set_background_color, set_color, \
-                 get_hardware
+import cairo
 
-from colorsys import * #XXX
+from util import mm, dimensions_mm, set_background_color, set_color, \
+    get_hardware
 
 
 def d2r(d):

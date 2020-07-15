@@ -18,28 +18,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Ruler.  If not, see <http://www.gnu.org/licenses/>
 
-import gi
-from gi.repository import Gtk
-from gi.repository import GObject
 from gi.repository import Gdk
-
-import cairo
-
-import os.path
-
-import sugar3
+from gi.repository import Gtk
 from sugar3.activity import activity
-from sugar3.graphics.toolbarbox import ToolbarBox
-from sugar3.bundle.activitybundle import ActivityBundle
 from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.activity.widgets import StopButton
-from sugar3.graphics.toolbarbox import ToolbarButton
-from sugar3.graphics.radiotoolbutton import RadioToolButton
-from sugar3.graphics.toolbutton import ToolButton
-from sugar3.graphics.menuitem import MenuItem
-from sugar3.graphics.icon import Icon
-from sugar3.datastore import datastore
 from sugar3.graphics import style
+from sugar3.graphics.radiotoolbutton import RadioToolButton
+from sugar3.graphics.toolbarbox import ToolbarBox
+from sugar3.graphics.toolbarbox import ToolbarButton
+
 GRID_CELL_SIZE = style.GRID_CELL_SIZE
 
 import logging
