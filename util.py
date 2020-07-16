@@ -120,25 +120,3 @@ def write(c, text, name, size, centered=False, at_top=False):
 
     if not at_top:
         c.rel_move_to(0, -baseline_offset)
-
-
-def check_output(command, warning):
-    ''' Workaround for old systems without subprocess.check_output'''
-    if hasattr(subprocess, 'check_output'):
-        try:
-            output = subprocess.check_output(command)
-        except subprocess.CalledProcessError:
-            log.warning(warning)
-            return None
-    else:
-        import subprocess
-
-        cmd = ''
-        for c in command:
-            cmd += c
-            cmd += ' '
-        (status, output) = subprocess.getstatusoutput(cmd)
-        if status != 0:
-            log.warning(warning)
-            return None
-    return output
